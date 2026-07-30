@@ -1,111 +1,55 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@import "tailwindcss";
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+body{
+  background-color: #FFFDF9;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+@theme {
+  /* Fonts */
+  --font-sans: "Fredoka", system-ui, sans-serif;
+  --font-heading: "Fredoka", system-ui, sans-serif;
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
+  /* Primary Brand */
+  --color-brand: #FF6B00;
+  --color-brand-hover: #F05A00;
+  --color-brand-active: #D94F00;
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
+  /* Brand Backgrounds */
+  --color-brand-soft: #FFF0DE;
+  --color-brand-subtle: #FFF8F0;
 
-body {
-  margin: 0;
-}
+  /* Backgrounds */
+  --color-background: #FFFDF9;
+  --color-background-secondary: #FFF8F1;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #FFFAF4;
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
+  /* Text */
+  --color-foreground: #3A1F12;
+  --color-foreground-secondary: #5D4433;
+  --color-foreground-muted: #9E8D7C;
+  --color-foreground-inverse: #FFFFFF;
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
+  /* Borders */
+  --color-outline: #F6E6D7;
+  --color-outline-hover: #EECBA8;
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
+  /* Semantic */
+  --color-success: #4CAF50;
+  --color-warning: #FFC83D;
+  --color-danger: #EF5350;
+  --color-info: #42A5F5;
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+  /* Decorative */
+  --color-highlight: #FFD54A;
+  --color-shadow: rgb(255 107 0 / 0.15);
+
+  /* Extra colors used on the landing */
+  --color-cream: #FFF4E7;
+  --color-peach: #FFE4C4;
+  --color-orange-light: #FF9B42;
+  --color-orange-dark: #C95A0A;
+  --color-brown: #4A2816;
+  --color-brown-light: #6A4531;
+  --color-icon: #F8B24E;
 }

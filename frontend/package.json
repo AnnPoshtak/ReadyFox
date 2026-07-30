@@ -10,9 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@lottiefiles/react-lottie-player": "^3.6.0",
     "@tailwindcss/vite": "^4.3.3",
     "axios": "^1.18.1",
+    "lottie-react": "^2.4.1",
     "lucide": "^1.26.0",
+    "lucide-react": "^1.26.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-hook-form": "^7.82.0",
