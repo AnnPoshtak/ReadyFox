@@ -1,4 +1,6 @@
 import { NestFactory, Reflector } from '@nestjs/core';
+import * as dns from 'node:dns'
+dns.setDefaultResultOrder('ipv4first');
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
@@ -19,7 +21,7 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('Cafe API')
+    .setTitle('ReadyFox API')
     .setVersion('1.0')
     .addBearerAuth(
       {
