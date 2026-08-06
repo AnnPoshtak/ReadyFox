@@ -1,9 +1,20 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { ArrowRight, KeyRound } from "lucide-react";
 import { BlobShape } from "../../components/BlobShape";
 import { MainFeatures } from "./MainFeatures";
 
 export default function Home() {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem("accessToken");
+        if (token) {
+            navigate("/home");
+        }
+    }, [navigate]);
+
     return (
         <div className="min-h-screen bg-background text-foreground font-sans selection:bg-brand selection:text-foreground-inverse">
             <section className="max-w-7xl mx-auto px-6 pt-10 pb-20 md:pt-16 md:pb-24">
@@ -20,7 +31,10 @@ export default function Home() {
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2 w-full sm:w-auto">
-                            <button className="px-7 py-4 rounded-2xl bg-brand hover:bg-brand-hover active:scale-95 text-foreground-inverse font-heading font-bold flex items-center justify-center gap-2.5 transition-all shadow-lg shadow-brand/25 cursor-pointer text-base">
+                            <button 
+                                onClick={() => navigate("/auth")}
+                                className="px-7 py-4 rounded-2xl bg-brand hover:bg-brand-hover active:scale-95 text-foreground-inverse font-heading font-bold flex items-center justify-center gap-2.5 transition-all shadow-lg shadow-brand/25 cursor-pointer text-base"
+                            >
                                 <span>Почати навчання</span>
                                 <ArrowRight className="w-5 h-5" />
                             </button>
@@ -65,7 +79,10 @@ export default function Home() {
                         <p className="text-brand-subtle text-base md:text-lg opacity-95 leading-relaxed">
                             Пройти квіз можна і без авторизації, але акаунт дозволить піднятися в рейтингу за кількістю правильних відповідей та зберегти власну статистику.
                         </p>
-                        <button className="px-7 py-4 rounded-2xl bg-surface hover:bg-surface-hover text-brand font-heading font-bold flex items-center gap-3 transition-all cursor-pointer shadow-md active:scale-95 text-base">
+                        <button 
+                            onClick={() => navigate("/auth")}
+                            className="px-7 py-4 rounded-2xl bg-surface hover:bg-surface-hover text-brand font-heading font-bold flex items-center gap-3 transition-all cursor-pointer shadow-md active:scale-95 text-base"
+                        >
                             <span>Зареєструватися безкоштовно</span>
                             <ArrowRight className="w-5 h-5" />
                         </button>
