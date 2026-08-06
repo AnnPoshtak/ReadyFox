@@ -2,11 +2,11 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { OnboardingDto } from './dto/onboarding.dto';
 
 interface SignInData {
   email: string;
   id: number;
-  role: string;
 }
 
 export interface AuthResult {
@@ -14,7 +14,6 @@ export interface AuthResult {
   refreshToken: string;
   id: number;
   email: string;
-  role: string;
 }
 
 @Injectable()
@@ -22,7 +21,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService
-  ) { }
+  ) {}
 
   async validateUser(email: string, pass: string): Promise<SignInData | null> {
     const user = await this.usersService.findUserByEmail(email);
@@ -33,7 +32,6 @@ export class AuthService {
         return {
           id: user.id,
           email: user.email,
-          role: user.role
         };
       }
     }
@@ -44,18 +42,19 @@ export class AuthService {
     const tokenPayload = {
       sub: user.id,
       email: user.email,
-      role: user.role
     };
 
     const accessToken = await this.jwtService.signAsync(tokenPayload, {
-      expiresIn: '15m', 
+      expiresIn: '15m',
     });
 
-    const refreshToken = await this.jwtService.signAsync({ sub: user.id }, {
-      expiresIn: '7d', 
-    });
+    const refreshToken = await this.jwtService.signAsync(
+      { sub: user.id },
+      { expiresIn: '7d' }
+    );
 
-    await this.usersService.setCurrentRefreshToken(user.id, refreshToken);
+    const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+    await this.usersService.setCurrentRefreshToken(user.id, hashedRefreshToken);
 
     return { accessToken, refreshToken };
   }
@@ -67,14 +66,13 @@ export class AuthService {
       ...tokens,
       email: user.email,
       id: user.id,
-      role: user.role
     };
   }
 
   async refreshTokens(userId: number, refreshToken: string) {
     const user = await this.usersService.findUserById(userId);
     if (!user || !user.hashedRefreshToken) {
-      throw new UnauthorizedException('Access Denied');
+      throw new UnauthorizedException('Access denied');
     }
 
     const isRefreshTokenMatching = await bcrypt.compare(
@@ -83,13 +81,12 @@ export class AuthService {
     );
 
     if (!isRefreshTokenMatching) {
-      throw new UnauthorizedException('Access Denied');
+      throw new UnauthorizedException('Access denied');
     }
 
     const tokens = await this.generateTokens({
       id: user.id,
       email: user.email,
-      role: user.role
     });
 
     return tokens;
@@ -100,13 +97,21 @@ export class AuthService {
     return { message: 'Logged out successfully' };
   }
 
-  async register(email: string, pass: string) {
-    const newUser = await this.usersService.createUser(email, pass);
+  async register(email: string, pass: string, fullName?: string) {
+    const newUser = await this.usersService.createUser(email, pass, fullName);
+
     return {
-      message: 'Registration successful!',
+      message: 'Registration successful',
       id: newUser.id,
       email: newUser.email,
-      role: newUser.role
+    };
+  }
+
+  async completeOnboarding(userId: number, dto: OnboardingDto) {
+    const updatedUser = await this.usersService.updateOnboarding(userId, dto);
+    return {
+      message: 'Onboarding completed successfully',
+      user: updatedUser,
     };
   }
 }

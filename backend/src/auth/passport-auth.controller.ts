@@ -4,6 +4,7 @@ import { PassportLocalGuard } from "./guards/passport-local.guard";
 import { PassportJwtAuthGuard } from "./guards/passport-jwt.guard";
 import { GoogleAuthGuard } from "./guards/google-auth.guard";
 import { CreateAuthDto } from "./dto/create-auth.dto";
+import { OnboardingDto } from "./dto/onboarding.dto";
 import { Public } from "./decorators/public.decorator";
 import { PassportRefreshGuard } from "./guards/passport-refresh.guard";
 
@@ -62,4 +63,10 @@ export class PassportAuthController {
         return this.authService.logout(req.user.sub || req.user.id);
     }
 
+    @UseGuards(PassportJwtAuthGuard)
+    @Patch('onboarding')
+    async completeOnboarding(@Request() req: any, @Body() dto: OnboardingDto) {
+        const userId = req.user.sub || req.user.id;
+        return this.authService.completeOnboarding(userId, dto);
+    }
 }
