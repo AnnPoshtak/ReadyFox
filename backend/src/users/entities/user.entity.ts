@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm';
+import { Quiz } from 'src/quizes/entities/quiz.entity'; 
 
 @Entity('users')
 export class User {
@@ -8,12 +16,21 @@ export class User {
   @Column({ unique: true })
   email: string;
 
+  @Column({ name: 'name_and_surname', nullable: true })
+  nameAndSurname?: string;
+
   @Column({ nullable: true })
   password?: string;
 
-  @Column({ default: 'client' })
-  role: string;
+  @Column({ type: 'varchar', nullable: true })
+  hashedRefreshToken?: string | null;
 
-  @Column({ nullable: true })
-  hashedRefreshToken?: string;
+  @OneToMany(() => Quiz, (quiz) => quiz.author)
+  quizzes: Quiz[];
+
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 }

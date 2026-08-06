@@ -9,6 +9,7 @@ import { LoggerMiddleware } from './logger.middleware';
 import { dataSourceOptions } from './data-source';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { QuizesModule } from './quizes/quizes.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     UsersModule,
     AuthModule,
+    QuizesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
