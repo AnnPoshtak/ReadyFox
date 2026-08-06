@@ -90,7 +90,7 @@ export const AuthPage = () => {
             
             <div className="flex lg:hidden flex-col items-center mb-4">
               <div className="w-24 h-24 mb-2">
-                <Player src="/stickers/017.json" loop autoplay className="w-full h-full" />
+                <Player src="/stickers/020.json" loop autoplay className="w-full h-full" />
               </div>
             </div>
 
