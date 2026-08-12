@@ -26,7 +26,7 @@ export const AuthPage = () => {
         const res = await axios.post(`${BACKEND_URL}/auth/login`, { email, password });
         localStorage.setItem("accessToken", res.data.accessToken);
         localStorage.setItem("refreshToken", res.data.refreshToken);
-        navigate("/home");
+        navigate("/dashboard");
       } else {
         await axios.post(`${BACKEND_URL}/auth/register`, { email, password });
         

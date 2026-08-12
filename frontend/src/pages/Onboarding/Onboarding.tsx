@@ -20,7 +20,7 @@ export const OnboardingPage = () => {
       await authApi.completeOnboarding({
         fullName: nameAndSurname,
       });
-      navigate("/home");
+      navigate("/dashboard");
     } catch (error: any) {
       setErrorMessage(
         error.response?.data?.message || "Не вдалося зберегти профіль. Спробуйте ще раз."

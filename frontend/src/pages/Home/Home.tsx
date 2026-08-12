@@ -11,7 +11,7 @@ export default function Home() {
     useEffect(() => {
         const token = localStorage.getItem("accessToken");
         if (token) {
-            navigate("/home");
+            navigate("/dashboard");
         }
     }, [navigate]);
 

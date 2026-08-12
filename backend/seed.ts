@@ -1,0 +1,1 @@
+console.log("Seed will be soon")
