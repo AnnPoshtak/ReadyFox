@@ -49,6 +49,16 @@ export class CreateQuizeDto {
   @IsNotEmpty()
   category!: string;
 
+  @ApiProperty({ example: 5 })
+  @IsNumber()
+  @IsNotEmpty()
+  timeToRead!: number;
+
+  @ApiProperty({ example: 10 })
+  @IsNumber()
+  @IsNotEmpty()
+  timeToPass!: number;
+
   @ApiProperty({ type: [QuestionDto] })
   @IsArray()
   @ValidateNested({ each: true })

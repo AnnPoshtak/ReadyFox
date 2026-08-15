@@ -22,6 +22,12 @@ export class Quiz {
   @Column()
   category: string;
 
+  @Column({ name: 'time_to_read' })
+  timeToRead: number;
+
+  @Column({ name: 'time_to_pass' })
+  timeToPass: number;
+
   @ManyToOne(() => User, (user) => user.quizzes, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'author_id' })
   author: User;
