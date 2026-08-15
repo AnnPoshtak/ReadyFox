@@ -47,7 +47,7 @@ api.interceptors.response.use(
       if (originalRequest.url?.includes('/auth/refresh')) {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
-        window.location.href = '/login';
+        window.location.href = '/';
         return Promise.reject(error);
       }
 
@@ -98,7 +98,7 @@ api.interceptors.response.use(
         processQueue(refreshError as AxiosError, null);
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
-        window.location.href = '/login';
+        window.location.href = '/';
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;
