@@ -9,6 +9,8 @@ import AuthPage from "../pages/Auth/Auth";
 import OnboardingPage from "../pages/Onboarding/Onboarding";
 import { OAuthSuccess } from "../pages/OAuthSuccess/OAuthSuccess";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import CreateQuiz from "../pages/CreateQuiz/CreateQuiz";
+import Rules from "../pages/Rules/Rules";
 
 const MainLayout = () => {
     return (
@@ -36,7 +38,9 @@ export const Router = () => {
                 <Route path="/onboarding" element={<OnboardingPage />} />
                 <Route path="/oauth-success" element={<OAuthSuccess />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/create-quiz" element={<CreateQuiz />} />
+                <Route path="/rules" element={<Rules />} />
             </Routes>
         </BrowserRouter>
     );
-};
+}
