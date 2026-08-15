@@ -24,13 +24,23 @@ export const AuthPage = () => {
     try {
       if (isLogin) {
         const res = await axios.post(`${BACKEND_URL}/auth/login`, { email, password });
+        
         localStorage.setItem("accessToken", res.data.accessToken);
         localStorage.setItem("refreshToken", res.data.refreshToken);
-        navigate("/dashboard");
+
+        // Перевіряємо, чи пройшов користувач онбордінг раніше
+        // (Якщо isOnboarded === false, кидаємо на онбордінг, інакше на /dashboard)
+        if (res.data.user?.isOnboarded === false) {
+          navigate("/onboarding");
+        } else {
+          navigate("/dashboard");
+        }
+
       } else {
         await axios.post(`${BACKEND_URL}/auth/register`, { email, password });
         
         const loginRes = await axios.post(`${BACKEND_URL}/auth/login`, { email, password });
+        
         localStorage.setItem("accessToken", loginRes.data.accessToken);
         localStorage.setItem("refreshToken", loginRes.data.refreshToken);
 

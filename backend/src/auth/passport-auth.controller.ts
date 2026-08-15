@@ -43,7 +43,12 @@ export class PassportAuthController {
     async googleAuthRedirect(@Request() req: any, @Response() res: any) {
         const authResult = await this.authService.signIn(req.user);
 
-        const frontendUrl = `${process.env.FRONTEND_URL}/oauth-success?token=${authResult.accessToken}`;
+        const params = new URLSearchParams({
+            accessToken: authResult.accessToken,
+            refreshToken: authResult.refreshToken,
+        });
+
+        const frontendUrl = `${process.env.FRONTEND_URL}/oauth-success?${params.toString()}`;
 
         return res.redirect(frontendUrl);
     }

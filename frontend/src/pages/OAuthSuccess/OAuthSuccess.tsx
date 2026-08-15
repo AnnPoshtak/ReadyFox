@@ -7,13 +7,28 @@ export const OAuthSuccess = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = searchParams.get("token");
-    if (token) {
-      localStorage.setItem("accessToken", token);
-      navigate("/onboarding");
-    } else {
-      navigate("/auth");
+    const accessToken = searchParams.get("accessToken");
+    const refreshToken = searchParams.get("refreshToken");
+    const isOnboardedParam = searchParams.get("isOnboarded"); 
+
+    if (accessToken) {
+      localStorage.setItem("accessToken", accessToken);
     }
+
+    if (refreshToken) {
+      localStorage.setItem("refreshToken", refreshToken);
+    }
+
+    if (accessToken) {
+      if (isOnboardedParam === "false") {
+        navigate("/onboarding");
+      } else {
+        navigate("/dashboard");
+      }
+      return;
+    }
+
+    navigate("/auth");
   }, [searchParams, navigate]);
 
   return (
