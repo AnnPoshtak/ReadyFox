@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { Plus, Trash2, Check, Clock, BookOpen, AlertCircle, Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Plus, Trash2, Check, Clock, BookOpen, AlertCircle, ArrowRight } from "lucide-react";
 import CustomSelect from "../../components/CustomSelect";
 import { SUBJECT_OPTIONS, type Option } from "../../constants/subjects";
-import { quizzesApi } from "../../api/services/quizzes";
 
 interface LocalOption {
   id: number;
@@ -32,9 +31,7 @@ export default function CreateQuiz() {
     },
   ]);
 
-  const [isAgreed, setIsAgreed] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleAddQuestion = () => {
     setQuestions([
@@ -101,7 +98,7 @@ export default function CreateQuiz() {
     setQuestions(updated);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleNext = (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
@@ -111,10 +108,6 @@ export default function CreateQuiz() {
     }
     if (!selectedSubject) {
       setError("Будь ласка, оберіть предмет.");
-      return;
-    }
-    if (!isAgreed) {
-      setError("Необхідно погодитися з правилами для створення квізу.");
       return;
     }
 
@@ -147,18 +140,8 @@ export default function CreateQuiz() {
       })),
     };
 
-    try {
-      setIsSubmitting(true);
-      await quizzesApi.create(payload as any);
-      navigate("/dashboard");
-    } catch (err: any) {
-      console.error(err);
-      setError(
-        err.response?.data?.message || "Помилка при створенні квізу. Спробуйте пізніше."
-      );
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Переходимо на сторінку правил і передаємо зібрані дані
+    navigate("/dashboard/rules", { state: { quizData: payload } });
   };
 
   return (
@@ -172,7 +155,7 @@ export default function CreateQuiz() {
         </p>
       </section>
 
-      <form onSubmit={handleSubmit} className="w-full max-w-3xl flex flex-col gap-6">
+      <form onSubmit={handleNext} className="w-full max-w-3xl flex flex-col gap-6">
         <div className="bg-surface p-5 sm:p-6 rounded-2xl border border-outline shadow-sm flex flex-col gap-4">
           <h2 className="text-lg font-bold text-foreground">Основні параметри</h2>
 
@@ -330,41 +313,12 @@ export default function CreateQuiz() {
           </div>
         )}
 
-        <div className="bg-surface p-5 rounded-2xl border border-outline shadow-sm flex flex-col gap-4">
-          <label className="flex items-start gap-3 cursor-pointer select-none">
-            <input
-              type="checkbox"
-              checked={isAgreed}
-              onChange={(e) => setIsAgreed(e.target.checked)}
-              className="mt-0.5 h-4 w-4 rounded border-outline text-brand focus:ring-brand accent-brand cursor-pointer"
-            />
-            <span className="text-xs text-foreground-secondary leading-normal font-medium">
-              Створюючи новий квіз, ви підтверджуєте, що ознайомлені з нашими{" "}
-              <Link
-                to="/rules"
-                target="_blank"
-                className="text-brand font-bold underline hover:text-brand-hover"
-              >
-                правилами
-              </Link>.
-            </span>
-          </label>
-
-          <button
-            type="submit"
-            disabled={isSubmitting || !isAgreed}
-            className="w-full bg-brand text-white font-bold hover:bg-brand-hover disabled:opacity-50 disabled:cursor-not-allowed py-3 px-4 rounded-xl transition-colors cursor-pointer text-xs flex items-center justify-center gap-2 h-[42px]"
-          >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                Створення...
-              </>
-            ) : (
-              "Створити квіз"
-            )}
-          </button>
-        </div>
+        <button
+          type="submit"
+          className="w-full bg-brand text-white font-bold hover:bg-brand-hover py-3 px-4 rounded-xl transition-colors cursor-pointer text-xs flex items-center justify-center gap-2 h-[42px] shadow-sm"
+        >
+          Далі <ArrowRight className="w-4 h-4" />
+        </button>
       </form>
     </div>
   );

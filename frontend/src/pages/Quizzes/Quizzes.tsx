@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Search, BookOpen, Plus } from "lucide-react";
-import CustomSelect from "../../../components/CustomSelect";
-import { SUBJECT_OPTIONS, type Option } from "../../../constants/subjects";
+import CustomSelect from "@/components/CustomSelect";
+import { SUBJECT_OPTIONS, type Option } from "@/constants/subjects";
 import { useNavigate } from "react-router-dom";
-import { quizzesApi } from "../../../api/services/quizzes";
+import { quizzesApi } from "@/api/services/quizzes";
 
 interface QuizAuthor {
   id: number;
@@ -139,7 +139,7 @@ export default function Quizzes() {
           aria-label="Створити свій квіз"
           className="flex h-14 w-14 items-center justify-center rounded-full bg-brand text-white shadow-lg shadow-shadow transition-all duration-300 ease-out hover:bg-brand-hover hover:shadow-xl hover:scale-105 active:scale-95 cursor-pointer border border-brand-hover"
           onClick={() => {
-            navigation("/create-quiz");
+            navigation("new");
           }}
         >
           <Plus className="h-7 w-7 transition-transform duration-300 ease-out group-hover:rotate-90" />

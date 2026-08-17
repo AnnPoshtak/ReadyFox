@@ -48,7 +48,7 @@ export class PassportAuthController {
             refreshToken: authResult.refreshToken,
         });
 
-        const frontendUrl = `${process.env.FRONTEND_URL}/oauth-success?${params.toString()}`;
+        const frontendUrl = `${process.env.FRONTEND_URL}/auth/callback?${params.toString()}`;
 
         return res.redirect(frontendUrl);
     }

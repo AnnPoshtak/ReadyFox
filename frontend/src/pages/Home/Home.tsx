@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { ArrowRight, KeyRound } from "lucide-react";
@@ -7,14 +6,6 @@ import { MainFeatures } from "./MainFeatures";
 
 export default function Home() {
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const token = localStorage.getItem("accessToken");
-        if (token) {
-            navigate("/dashboard");
-        }
-    }, [navigate]);
-
     return (
         <div className="min-h-screen bg-background text-foreground font-sans selection:bg-brand selection:text-foreground-inverse">
             <section className="max-w-7xl mx-auto px-6 pt-10 pb-20 md:pt-16 md:pb-24">
