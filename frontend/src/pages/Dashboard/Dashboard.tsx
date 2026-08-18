@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
 import { WelcomeBlock } from "./components/WelcomeBlock";
-import type { UserProfile } from "@/api/types";
+import type { UserProfile, Quiz } from "@/api/types";
 import { authApi } from "@/api/services/auth";
-
-const MOCK_QUIZZES = [
-  { id: "q1", title: "Основи мови JavaScript", questionsCount: 10, createdAt: "12 травня" },
-  { id: "q2", title: "Алгебра: Квадратні рівняння", questionsCount: 15, createdAt: "08 травня" },
-];
+import { quizzesApi } from "@/api/services/quizzes";
+import { formatIsoTimestamp } from "@/utilities/FormatIsoTimestamp";
 
 const MOCK_LESSONS = [
   { id: "l1", title: "Історія України: ХХ століття", createdAt: "10 травня" },
@@ -15,6 +12,7 @@ const MOCK_LESSONS = [
 
 export default function Main() {
   const [user, setUser] = useState<UserProfile | null>(null);
+  const [usersQuizzes, setUsersQuizzes] = useState<Quiz[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -32,8 +30,21 @@ export default function Main() {
     fetchUser();
   }, []);
 
+  useEffect(() => {
+    const fetchUsersQuizzes = async () => {
+      try {
+        const data = await quizzesApi.findMyQuizzes();
+        setUsersQuizzes(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUsersQuizzes();
+  }, []);
+
   if (isLoading) {
-    return <div className="mx-auto max-w-7xl px-8 py-8 text-foreground-muted font-sans">Завантаження...</div>; 
+    return <div className="mx-auto max-w-7xl px-8 py-8 text-foreground-muted font-sans">Завантаження...</div>;
   }
 
   const firstName = user?.nameAndSurname ? user.nameAndSurname.split(" ")[0] : "користувач";
@@ -41,8 +52,6 @@ export default function Main() {
   return (
     <div className="mx-auto max-w-7xl px-8 py-8 space-y-10 font-sans text-foreground">
       <WelcomeBlock firstName={firstName} />
-
-      {/* Hero-блок без іконок */}
       <section className="p-6 sm:p-8 bg-brand-soft border border-outline rounded-3xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-sm">
         <div className="space-y-1 max-w-xl">
           <h2 className="text-2xl font-bold text-foreground">Маєш код від вчителя чи друга?</h2>
@@ -58,8 +67,6 @@ export default function Main() {
           Приєднатися за кодом
         </button>
       </section>
-
-      {/* Створення: акцент на типографіці та плашках */}
       <section className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div className="p-6 bg-surface border border-outline rounded-3xl flex flex-col justify-between hover:border-outline-hover transition-all hover:shadow-md group">
           <div className="space-y-3">
@@ -98,7 +105,6 @@ export default function Main() {
         </div>
       </section>
 
-      {/* Твої квізи */}
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-bold text-foreground">Твої квізи</h2>
@@ -107,34 +113,48 @@ export default function Main() {
           </a>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {MOCK_QUIZZES.map((quiz) => (
+        <div className="flex overflow-x-auto gap-4 pb-2">
+          {usersQuizzes.map((quiz) => (
             <div
               key={quiz.id}
-              className="p-5 bg-surface border border-outline rounded-2xl flex flex-col justify-between hover:border-outline-hover transition-all hover:shadow-sm"
+              className="w-72 sm:w-80 shrink-0 p-5 bg-surface border border-outline rounded-2xl flex flex-col justify-between hover:border-outline-hover transition-all hover:shadow-sm"
             >
               <div className="space-y-2">
                 <span className="text-xs px-3 py-1 bg-brand-soft text-brand rounded-full font-mono font-bold inline-block border border-outline tracking-tight">
-                  {quiz.questionsCount} питань
+                  Кількість питань: {quiz.questions?.length || 0}
                 </span>
-                <h3 className="font-bold text-lg text-foreground line-clamp-2">{quiz.title}</h3>
+
+                <h3 className="font-bold text-lg text-foreground line-clamp-2">
+                  {quiz.name}
+                </h3>
+
+                {quiz.category && (
+                  <span className="inline-block text-xs font-semibold text-foreground-muted bg-outline/20 px-2.5 py-0.5 rounded-md border border-outline/50">
+                    {quiz.category}
+                  </span>
+                )}
               </div>
 
-              <div className="pt-4 mt-4 border-t border-outline flex items-center justify-between text-sm">
-                <span className="text-xs text-foreground-muted font-sans">{quiz.createdAt}</span>
-                <a
-                  href={`/quizzes/${quiz.id}/edit`}
-                  className="px-3.5 py-1.5 bg-brand-subtle text-brand font-bold rounded-xl hover:bg-brand-soft transition-colors border border-outline text-xs"
-                >
-                  Редагувати
-                </a>
+              <div className="mt-6">
+                <span className="text-xs text-foreground-muted font-sans block mb-3">
+                  {formatIsoTimestamp(quiz.createdAt)}
+                </span>
+
+                <div className="pt-3 border-t border-outline">
+                  <button className="w-[50%] flex items-center justify-center px-4 py-2.5 bg-brand-subtle text-brand border border-outline font-bold rounded-xl hover:bg-brand-soft transition-colors text-center">
+                    Детальніше
+                  </button>
+                  <button className="w-[50%] flex items-center justify-center px-4 py-2.5 bg-brand-subtle text-brand border border-outline font-bold rounded-xl hover:bg-brand-soft transition-colors text-center">
+                    Редагувати
+                  </button>
+
+                </div>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Твої уроки */}
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-bold text-foreground">Твої уроки</h2>
@@ -143,11 +163,11 @@ export default function Main() {
           </a>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="flex overflow-x-auto gap-4 pb-2">
           {MOCK_LESSONS.map((lesson) => (
             <div
               key={lesson.id}
-              className="p-5 bg-surface border border-outline rounded-2xl flex flex-col justify-between hover:border-outline-hover transition-all hover:shadow-sm"
+              className="w-72 sm:w-80 shrink-0 p-5 bg-surface border border-outline rounded-2xl flex flex-col justify-between hover:border-outline-hover transition-all hover:shadow-sm"
             >
               <div className="space-y-2">
                 <span className="text-xs px-3 py-1 bg-cream text-brown-light rounded-full font-bold inline-block border border-outline">
