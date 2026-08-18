@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Plus, Trash2, Check, Clock, BookOpen, AlertCircle, ArrowRight } from "lucide-react";
-import CustomSelect from "../../components/CustomSelect";
-import { SUBJECT_OPTIONS, type Option } from "../../constants/subjects";
+import CustomSelect from "@/components/CustomSelect";
+import { SUBJECT_OPTIONS, type Option } from "@/constants/subjects";
 
 interface LocalOption {
   id: number;
