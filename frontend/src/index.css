@@ -53,3 +53,27 @@ body{
   --color-brown-light: #6A4531;
   --color-icon: #F8B24E;
 }
+
+* {
+  scrollbar-width: fat;
+  scrollbar-color: var(--color-brand) var(--color-brand-soft);
+}
+
+::-webkit-scrollbar {
+  width: 5px; 
+  height: 8px; 
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-brand-soft);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-hover);
+}
