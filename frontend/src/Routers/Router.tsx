@@ -1,20 +1,30 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import Home from "@/pages/Home/Home";
-import FeaturesPage from "@/pages/Features/Features";
-import HowItWorksPage from "@/pages/HowItWorks/HowItWorks";
-import AboutPage from "@/pages/About/AboutPage";
-import AuthPage from "@/pages/Auth/Auth";
-import OnboardingPage from "@/pages/Onboarding/Onboarding";
-import { OAuthSuccess } from "@/pages/OAuthSuccess/OAuthSuccess";
-import Dashboard from "@/pages/Dashboard/Dashboard";
-import CreateQuiz from "@/pages/CreateQuiz/CreateQuiz";
-import Rules from "@/pages/Rules/Rules";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+// Layouts & Guard Routes
 import MainLayout from "@/layouts/MainLayout";
 import DashboardLayout from "@/layouts/DashboardLayout";
-import Quizzes from "@/pages/Quizzes/Quizzes";
-
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
+
+// Landing Pages
+import Home from "@/pages/landing/Home/Home";
+import FeaturesPage from "@/pages/landing/Features/Features";
+import HowItWorksPage from "@/pages/landing/HowItWorks/HowItWorks";
+import AboutPage from "@/pages/landing/About/AboutPage";
+
+// Dashboard Pages
+import Dashboard from "@/pages/dashboard/Dashboard/Dashboard";
+import Quizzes from "@/pages/dashboard/Quizzes/Quizzes";
+import QuizDetails from "@/pages/dashboard/QuizDetails/QuizDetails";
+import CreateQuiz from "@/pages/dashboard/CreateQuiz/CreateQuiz";
+import Rules from "@/pages/dashboard/Rules/Rules";
+
+// Auth Pages
+import AuthPage from "@/pages/auth/Auth/Auth";
+import { OAuthSuccess } from "@/pages/auth/OAuthSuccess/OAuthSuccess";
+import OnboardingPage from "@/pages/auth/Onboarding/Onboarding";
+
+// General Pages
 import NotFound from "@/pages/NotFound/NotFound";
 
 export const Router = () => {
@@ -26,6 +36,7 @@ export const Router = () => {
                     <Route path="/dashboard" element={<DashboardLayout />}>
                         <Route index element={<Dashboard />} />
                         <Route path="quizzes" element={<Quizzes />} />
+                        <Route path="quizzes/:quizId" element={<QuizDetails />} />
                         <Route path="quizzes/new" element={<CreateQuiz />} />
                         <Route path="rules" element={<Rules />} />
                     </Route>
