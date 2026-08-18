@@ -9,7 +9,7 @@ import {
     Users,
     CheckCircle2 
 } from "lucide-react";
-import { BlobShape } from "../../components/BlobShape";
+import { BlobShape } from "@/components/BlobShape";
 
 export default function FeaturesPage() {
     const featuresList = [
