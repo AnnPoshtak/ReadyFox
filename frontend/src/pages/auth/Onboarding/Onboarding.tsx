@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { Player } from "@lottiefiles/react-lottie-player";
-import { authApi } from "../../api/services/auth";
+import { authApi } from "@/api/services/auth";
 
 export const OnboardingPage = () => {
   const navigate = useNavigate();

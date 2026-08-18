@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { ArrowRight, KeyRound } from "lucide-react";
-import { BlobShape } from "../../components/BlobShape";
+import { BlobShape } from "@/components/BlobShape";
 import { MainFeatures } from "./MainFeatures";
 
 export default function Home() {

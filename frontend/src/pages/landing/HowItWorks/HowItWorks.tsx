@@ -7,7 +7,7 @@ import {
     CheckCircle2,
     XCircle,
 } from "lucide-react";
-import { BlobShape } from "../../components/BlobShape";
+import { BlobShape } from "@/components/BlobShape";
 
 export default function HowItWorksPage() {
     return (

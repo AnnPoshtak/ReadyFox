@@ -1,6 +1,6 @@
 import { Player } from "@lottiefiles/react-lottie-player";
 import { Flame, Heart, Gift, Quote } from "lucide-react";
-import { BlobShape } from "../../components/BlobShape";
+import { BlobShape } from "@/components/BlobShape";
 
 export default function AboutPage() {
     return (

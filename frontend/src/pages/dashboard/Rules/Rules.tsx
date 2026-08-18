@@ -18,7 +18,7 @@ import {
     AlertCircle,
     Lock
 } from "lucide-react";
-import { quizzesApi } from "../../api/services/quizzes";
+import { quizzesApi } from "@/api/services/quizzes";
 
 export default function Rules() {
     const location = useLocation();
