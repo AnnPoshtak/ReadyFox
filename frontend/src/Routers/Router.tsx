@@ -36,7 +36,7 @@ export const Router = () => {
                     <Route path="/dashboard" element={<DashboardLayout />}>
                         <Route index element={<Dashboard />} />
                         <Route path="quizzes" element={<Quizzes />} />
-                        <Route path="quizzes/:quizId" element={<QuizDetails />} />
+                        <Route path="quizzes/:id" element={<QuizDetails />} />
                         <Route path="quizzes/new" element={<CreateQuiz />} />
                         <Route path="rules" element={<Rules />} />
                     </Route>

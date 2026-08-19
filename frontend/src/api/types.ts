@@ -68,6 +68,8 @@ export interface QuizAuthor {
 export interface CreateQuizeDto {
   name: string;
   category: string;
+  TimeToRead: number;
+  TimeToPass: number;
   questions: QuestionDto[];
 }
 
