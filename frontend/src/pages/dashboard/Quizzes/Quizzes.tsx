@@ -117,7 +117,7 @@ export default function Quizzes() {
                     Предмет: {quiz.category}
                   </p>
                 </div>
-                <button className="mt-6 w-full bg-brand text-white font-bold hover:bg-brand-hover py-2.5 px-4 rounded-xl transition-colors cursor-pointer text-xs">
+                <button className="mt-6 w-full bg-brand text-white font-bold hover:bg-brand-hover py-2.5 px-4 rounded-xl transition-colors cursor-pointer text-xs" onClick={() => navigation(`${quiz.id}`)}>
                   Детальніше
                 </button>
               </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { WelcomeBlock } from "./components/WelcomeBlock";
 import type { UserProfile, Quiz } from "@/api/types";
 import { authApi } from "@/api/services/auth";
@@ -14,6 +15,7 @@ export default function Main() {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [usersQuizzes, setUsersQuizzes] = useState<Quiz[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigation = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -141,13 +143,9 @@ export default function Main() {
                 </span>
 
                 <div className="pt-3 border-t border-outline">
-                  <button className="w-[50%] flex items-center justify-center px-4 py-2.5 bg-brand-subtle text-brand border border-outline font-bold rounded-xl hover:bg-brand-soft transition-colors text-center">
+                  <button className="w-[50%] flex items-center justify-center px-4 py-2.5 bg-brand-subtle text-brand border border-outline font-bold rounded-xl hover:bg-brand-soft transition-colors text-center" onClick={() => navigation(`quizzes/${quiz.id}`)}>
                     Детальніше
                   </button>
-                  <button className="w-[50%] flex items-center justify-center px-4 py-2.5 bg-brand-subtle text-brand border border-outline font-bold rounded-xl hover:bg-brand-soft transition-colors text-center">
-                    Редагувати
-                  </button>
-
                 </div>
               </div>
             </div>
