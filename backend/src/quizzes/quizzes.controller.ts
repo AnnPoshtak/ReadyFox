@@ -11,31 +11,31 @@ import {
   Req,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
-import { QuizesService } from './quizes.service';
-import { CreateQuizeDto } from './dto/create-quize.dto';
-import { UpdateQuizeDto } from './dto/update-quize.dto';
+import { QuizzesService } from './quizzes.service';
+import { CreateQuizDto } from './dto/create-quiz.dto';
+import { UpdateQuizDto } from './dto/update-quiz.dto';
 import { PassportJwtAuthGuard } from '../auth/guards/passport-jwt.guard';
 import { Public } from '../auth/decorators/public.decorator';
 
 @ApiTags('Quizzes')
 @UseGuards(PassportJwtAuthGuard)
-@Controller('quizes')
-export class QuizesController {
-  constructor(private readonly quizesService: QuizesService) {}
+@Controller('quizzes')
+export class QuizzesController {
+  constructor(private readonly quizzesService: QuizzesService) {}
 
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create a new quiz' })
   @Post()
-  create(@Req() req: any, @Body() createQuizeDto: CreateQuizeDto) {
+  create(@Req() req: any, @Body() createQuizDto: CreateQuizDto) {
     const userId = req.user.id;
-    return this.quizesService.create(userId, createQuizeDto);
+    return this.quizzesService.create(userId, createQuizDto);
   }
 
   @Public()
   @ApiOperation({ summary: 'Get all quizzes' })
   @Get()
   findAll() {
-    return this.quizesService.findAll();
+    return this.quizzesService.findAll();
   }
 
   @ApiBearerAuth()
@@ -43,14 +43,14 @@ export class QuizesController {
   @Get('my')
   findMyQuizzes(@Req() req: any) {
     const userId = req.user.id;
-    return this.quizesService.findByUser(userId);
+    return this.quizzesService.findByUser(userId);
   }
 
   @Public()
   @ApiOperation({ summary: 'Get quiz by ID' })
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.quizesService.findOne(id);
+    return this.quizzesService.findOne(id);
   }
 
   @ApiBearerAuth()
@@ -59,10 +59,10 @@ export class QuizesController {
   update(
     @Param('id', ParseIntPipe) id: number,
     @Req() req: any,
-    @Body() updateQuizeDto: UpdateQuizeDto,
+    @Body() updateQuizDto: UpdateQuizDto,
   ) {
     const userId = req.user.id;
-    return this.quizesService.update(id, userId, updateQuizeDto);
+    return this.quizzesService.update(id, userId, UpdateQuizDto);
   }
 
   @ApiBearerAuth()
@@ -70,6 +70,6 @@ export class QuizesController {
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number, @Req() req: any) {
     const userId = req.user.id;
-    return this.quizesService.remove(id, userId);
+    return this.quizzesService.remove(id, userId);
   }
 }

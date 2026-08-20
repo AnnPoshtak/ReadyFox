@@ -1,39 +1,39 @@
 import { api } from '../axiosInstance';
 import {
   type Quiz,
-  type CreateQuizeDto,
-  type UpdateQuizeDto,
+  type CreateQuizDto,
+  type UpdateQuizDto,
   type DeleteQuizResponse,
 } from '../types';
 
 export const quizzesApi = {
-  create: async (dto: CreateQuizeDto): Promise<Quiz> => {
-    const response = await api.post<Quiz>('/quizes', dto);
+  create: async (dto: CreateQuizDto): Promise<Quiz> => {
+    const response = await api.post<Quiz>('/quizzes', dto);
     return response.data;
   },
 
   findAll: async (): Promise<Quiz[]> => {
-    const response = await api.get<Quiz[]>('/quizes');
+    const response = await api.get<Quiz[]>('/quizzes');
     return response.data;
   },
 
   findMyQuizzes: async (): Promise<Quiz[]> => {
-    const response = await api.get<Quiz[]>('/quizes/my');
+    const response = await api.get<Quiz[]>('/quizzes/my');
     return response.data;
   },
 
   findOne: async (id: number): Promise<Quiz> => {
-    const response = await api.get<Quiz>(`/quizes/${id}`);
+    const response = await api.get<Quiz>(`/quizzes/${id}`);
     return response.data;
   },
 
-  update: async (id: number, dto: UpdateQuizeDto): Promise<Quiz> => {
-    const response = await api.patch<Quiz>(`/quizes/${id}`, dto);
+  update: async (id: number, dto: UpdateQuizDto): Promise<Quiz> => {
+    const response = await api.patch<Quiz>(`/quizzes/${id}`, dto);
     return response.data;
   },
 
   remove: async (id: number): Promise<DeleteQuizResponse> => {
-    const response = await api.delete<DeleteQuizResponse>(`/quizes/${id}`);
+    const response = await api.delete<DeleteQuizResponse>(`/quizzes/${id}`);
     return response.data;
   },
 };

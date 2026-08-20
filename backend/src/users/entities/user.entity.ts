@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { Quiz } from 'src/quizes/entities/quiz.entity'; 
+import { Quiz } from 'src/quizzes/entities/quiz.entity'; 
 
 @Entity('users')
 export class User {

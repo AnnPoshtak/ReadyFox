@@ -65,7 +65,7 @@ export interface QuizAuthor {
   email?: string;
 }
 
-export interface CreateQuizeDto {
+export interface CreateQuizDto {
   name: string;
   category: string;
   TimeToRead: number;
@@ -73,7 +73,7 @@ export interface CreateQuizeDto {
   questions: QuestionDto[];
 }
 
-export type UpdateQuizeDto = Partial<CreateQuizeDto>;
+export type UpdateQuizDto = Partial<CreateQuizDto>;
 
 export interface Quiz {
   id: number;

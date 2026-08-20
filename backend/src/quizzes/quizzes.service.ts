@@ -6,17 +6,17 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Quiz } from './entities/quiz.entity';
-import { CreateQuizeDto } from './dto/create-quize.dto';
-import { UpdateQuizeDto } from './dto/update-quize.dto';
+import { CreateQuizDto } from './dto/create-quiz.dto';
+import { UpdateQuizDto } from './dto/update-quiz.dto';
 
 @Injectable()
-export class QuizesService {
+export class QuizzesService {
   constructor(
     @InjectRepository(Quiz)
     private readonly quizRepository: Repository<Quiz>,
   ) {}
 
-  async create(userId: number, createQuizeDto: CreateQuizeDto): Promise<Quiz> {
+  async create(userId: number, createQuizeDto: CreateQuizDto): Promise<Quiz> {
     const quiz = this.quizRepository.create({
       ...createQuizeDto,
       author: { id: userId },
@@ -78,7 +78,7 @@ export class QuizesService {
   async update(
     id: number,
     userId: number,
-    updateQuizeDto: UpdateQuizeDto,
+    updateQuizeDto: UpdateQuizDto,
   ): Promise<Quiz> {
     const quiz = await this.findOne(id);
 

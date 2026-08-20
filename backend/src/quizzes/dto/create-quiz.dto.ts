@@ -38,7 +38,7 @@ export class QuestionDto {
   options!: QuestionOptionDto[];
 }
 
-export class CreateQuizeDto {
+export class CreateQuizDto {
   @ApiProperty({ example: 'Географія світу' })
   @IsString()
   @IsNotEmpty()
