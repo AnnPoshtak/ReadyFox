@@ -9,7 +9,7 @@ import { LoggerMiddleware } from './logger.middleware';
 import { dataSourceOptions } from './data-source';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { QuizesModule } from './quizzes/quizzes.module';
+import { QuizzesModule } from './quizzes/quizzes.module';
 import { LessonsModule } from './lessons/lessons.module';
 
 @Module({
@@ -23,7 +23,7 @@ import { LessonsModule } from './lessons/lessons.module';
     }),
     UsersModule,
     AuthModule,
-    QuizesModule,
+    QuizzesModule,
     LessonsModule,
   ],
   controllers: [AppController],
