@@ -17,7 +17,7 @@ export class Quiz {
   id: number;
 
   @Column()
-  name: string;
+  title: string;
 
   @Column()
   category: string;

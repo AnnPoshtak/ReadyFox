@@ -55,18 +55,18 @@ export interface QuizAuthor {
 }
 
 export interface CreateQuizDto {
-  name: string;
+  title: string;
   category: string;
-  TimeToRead: number;
-  TimeToPass: number;
+  timeToRead: number;
+  timeToPass: number;
   questions: QuestionDto[];
 }
 
 export type UpdateQuizDto = Partial<CreateQuizDto>;
-
+  
 export interface Quiz {
   id: number;
-  name: string;
+  title: string;
   category: string;
   createdAt: string;
   editedAt: string;
@@ -77,3 +77,31 @@ export interface Quiz {
 export interface DeleteQuizResponse {
   message: string;
 }
+
+
+// Lessons
+export interface Lesson {
+  id: number;
+  title: string;
+  content: string;
+  createdAt: string;
+  editedAt: string;
+  author?: QuizAuthor;
+}
+
+export interface CreateLessonDto {
+  title: string;
+  content: string;
+}
+
+export type UpdateLessonDto = Partial<CreateLessonDto>;
+
+export interface DeleteLessonResponse {
+  message: string;
+}
+export interface LessonAuthor {
+  id: number;
+  nameAndSurname?: string;
+  email?: string;
+}
+

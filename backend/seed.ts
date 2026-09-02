@@ -1,1 +1,1 @@
-console.log("Seed will be soon")
+//If you need data to test website here is a seed file to populate the database with some initial data. You can run this script to insert sample data into your database for testing purposes.
