@@ -101,20 +101,19 @@ describe('AuthService', () => {
   });
 
   describe('register', () => {
-    it('should successfully register a new user and return user details with message', async () => {
-      const createdUser = { id: 99, email: 'leia@organa.com', role: 'rebel' };
-      
+    it('should successfully register a new user and keep the provided full name', async () => {
+      const createdUser = { id: 99, email: 'leia@organa.com', nameAndSurname: 'Лея Органа' };
+
       mockUsersService.createUser.mockResolvedValue(createdUser);
 
-      const result = await service.register('leia@organa.com', 'save_the_galaxy');
+      const result = await service.register('leia@organa.com', 'save_the_galaxy', 'Лея Органа');
 
       expect(result).toEqual({
-        message: 'Registration successful!',
+        message: 'Реєстрацію успішно завершено',
         id: 99,
         email: 'leia@organa.com',
-        role: 'rebel',
       });
-      expect(mockUsersService.createUser).toHaveBeenCalledWith('leia@organa.com', 'save_the_galaxy');
+      expect(mockUsersService.createUser).toHaveBeenCalledWith('leia@organa.com', 'save_the_galaxy', 'Лея Органа');
     });
   });
 });

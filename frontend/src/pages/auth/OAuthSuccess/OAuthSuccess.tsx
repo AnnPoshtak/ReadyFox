@@ -9,7 +9,6 @@ export const OAuthSuccess = () => {
   useEffect(() => {
     const accessToken = searchParams.get("accessToken");
     const refreshToken = searchParams.get("refreshToken");
-    const isOnboardedParam = searchParams.get("isOnboarded"); 
 
     if (accessToken) {
       localStorage.setItem("accessToken", accessToken);
@@ -20,11 +19,7 @@ export const OAuthSuccess = () => {
     }
 
     if (accessToken) {
-      if (isOnboardedParam === "false") {
-        navigate("/onboarding");
-      } else {
-        navigate("/dashboard");
-      }
+      navigate("/dashboard")
       return;
     }
 

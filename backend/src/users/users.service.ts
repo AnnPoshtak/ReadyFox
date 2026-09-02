@@ -1,9 +1,8 @@
-import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
-import { OnboardingDto } from '../auth/dto/onboarding.dto';
 
 @Injectable()
 export class UsersService {
@@ -35,7 +34,7 @@ export class UsersService {
     const existingUser = await this.findUserByEmail(email);
     if (existingUser) {
       throw new BadRequestException(
-        'Registration failed. User with this email already exists',
+        'Користувач з таким email вже існує',
       );
     }
 
@@ -63,6 +62,9 @@ export class UsersService {
         nameAndSurname,
       });
       user = await this.usersRepo.save(user);
+    } else if (!user.nameAndSurname && nameAndSurname) {
+      user.nameAndSurname = nameAndSurname;
+      user = await this.usersRepo.save(user);
     }
 
     return user;
@@ -74,15 +76,5 @@ export class UsersService {
 
   async removeRefreshToken(userId: number) {
     await this.usersRepo.update(userId, { hashedRefreshToken: null });
-  }
-
-  async updateOnboarding(userId: number, dto: OnboardingDto): Promise<User> {
-    const user = await this.findUserById(userId);
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
-
-    user.nameAndSurname = dto.fullName;
-    return this.usersRepo.save(user);
   }
 }

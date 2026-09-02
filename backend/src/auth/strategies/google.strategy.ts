@@ -20,14 +20,23 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     profile: any,
     done: VerifyCallback,
   ): Promise<any> {
-    const { emails } = profile;
+    const { name, emails } = profile;
+    
     const email = emails[0].value;
+    const firstName = name?.givenName || '';
+    const lastName = name?.familyName || '';
 
-    const user = await this.usersService.findOrCreateGoogleUser(email);
+    const nameAndSurname = `${firstName} ${lastName}`.trim();
+
+    const user = await this.usersService.findOrCreateGoogleUser(
+      email,
+      nameAndSurname,
+    );
 
     done(null, {
       id: user.id,
       email: user.email,
+      name_and_surname: user.nameAndSurname,
     });
   }
 }

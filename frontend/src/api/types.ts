@@ -32,17 +32,6 @@ export interface LogoutResponse {
   message: string;
 }
 
-export interface OnboardingDto {
-  fullName?: string;
-  age?: number;
-  interests?: string[];
-}
-
-export interface OnboardingResponse {
-  message: string;
-  user: UserProfile;
-}
-
 // Quizzes
 export interface QuestionOption {
   id: number;

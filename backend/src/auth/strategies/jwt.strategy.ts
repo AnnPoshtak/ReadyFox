@@ -17,7 +17,7 @@ export class JwtStrategy extends PassportStrategy(passportJwt.Strategy) {
         const user = await this.usersService.findUserWithQuizzes(payload.sub);
 
         if (!user) {
-            throw new UnauthorizedException('User not found');
+            throw new UnauthorizedException('Користувача не знайдено');
         }
         const { password, hashedRefreshToken, ...result } = user;
 

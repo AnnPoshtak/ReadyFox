@@ -5,8 +5,6 @@ import {
   type AuthResult,
   type UserProfile,
   type LogoutResponse,
-  type OnboardingDto,
-  type OnboardingResponse,
 } from '../types';
 
 export const authApi = {
@@ -44,10 +42,5 @@ export const authApi = {
   googleLogin: (): void => {
     const baseURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
     window.location.href = `${baseURL}/auth/google`;
-  },
-
-  completeOnboarding: async (dto: OnboardingDto): Promise<OnboardingResponse> => {
-    const response = await api.patch<OnboardingResponse>('/auth/onboarding', dto);
-    return response.data;
   },
 };

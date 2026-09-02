@@ -1,10 +1,9 @@
-import { Controller, Get, Post, UseGuards, Request, Response, Body, Patch } from "@nestjs/common";
+import { Controller, Get, Post, UseGuards, Request, Response, Body } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { PassportLocalGuard } from "./guards/passport-local.guard";
 import { PassportJwtAuthGuard } from "./guards/passport-jwt.guard";
 import { GoogleAuthGuard } from "./guards/google-auth.guard";
 import { CreateAuthDto } from "./dto/create-auth.dto";
-import { OnboardingDto } from "./dto/onboarding.dto";
 import { Public } from "./decorators/public.decorator";
 import { PassportRefreshGuard } from "./guards/passport-refresh.guard";
 
@@ -15,7 +14,7 @@ export class PassportAuthController {
     @Public()
     @Post('register')
     async register(@Body() input: CreateAuthDto) {
-        return this.authService.register(input.email, input.password);
+        return this.authService.register(input.email, input.password, input.nameAndSurname);
     }
 
     @Public()
@@ -68,10 +67,4 @@ export class PassportAuthController {
         return this.authService.logout(req.user.sub || req.user.id);
     }
 
-    @UseGuards(PassportJwtAuthGuard)
-    @Patch('onboarding')
-    async completeOnboarding(@Request() req: any, @Body() dto: OnboardingDto) {
-        const userId = req.user.sub || req.user.id;
-        return this.authService.completeOnboarding(userId, dto);
-    }
 }

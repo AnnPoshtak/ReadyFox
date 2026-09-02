@@ -2,7 +2,6 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { OnboardingDto } from './dto/onboarding.dto';
 
 interface SignInData {
   email: string;
@@ -72,7 +71,7 @@ export class AuthService {
   async refreshTokens(userId: number, refreshToken: string) {
     const user = await this.usersService.findUserById(userId);
     if (!user || !user.hashedRefreshToken) {
-      throw new UnauthorizedException('Access denied');
+      throw new UnauthorizedException('Доступ заборонено');
     }
 
     const isRefreshTokenMatching = await bcrypt.compare(
@@ -81,7 +80,7 @@ export class AuthService {
     );
 
     if (!isRefreshTokenMatching) {
-      throw new UnauthorizedException('Access denied');
+      throw new UnauthorizedException('Доступ заборонено');
     }
 
     const tokens = await this.generateTokens({
@@ -94,24 +93,16 @@ export class AuthService {
 
   async logout(userId: number) {
     await this.usersService.removeRefreshToken(userId);
-    return { message: 'Logged out successfully' };
+    return { message: 'Вихід виконано успішно' };
   }
 
   async register(email: string, pass: string, fullName?: string) {
     const newUser = await this.usersService.createUser(email, pass, fullName);
 
     return {
-      message: 'Registration successful',
+      message: 'Реєстрацію успішно завершено',
       id: newUser.id,
       email: newUser.email,
-    };
-  }
-
-  async completeOnboarding(userId: number, dto: OnboardingDto) {
-    const updatedUser = await this.usersService.updateOnboarding(userId, dto);
-    return {
-      message: 'Onboarding completed successfully',
-      user: updatedUser,
     };
   }
 }

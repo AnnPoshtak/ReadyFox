@@ -22,7 +22,6 @@ import Rules from "@/pages/dashboard/Rules/Rules";
 // Auth Pages
 import AuthPage from "@/pages/auth/Auth/Auth";
 import { OAuthSuccess } from "@/pages/auth/OAuthSuccess/OAuthSuccess";
-import OnboardingPage from "@/pages/auth/Onboarding/Onboarding";
 
 // General Pages
 import NotFound from "@/pages/NotFound/NotFound";
@@ -40,7 +39,6 @@ export const Router = () => {
                         <Route path="quizzes/new" element={<CreateQuiz />} />
                         <Route path="rules" element={<Rules />} />
                     </Route>
-                    <Route path="/onboarding" element={<OnboardingPage />} />
                 </Route>
 
                 {/* Public routes */}
