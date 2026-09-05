@@ -11,6 +11,7 @@ import { Type } from 'class-transformer';
 
 export class QuestionOptionDto {
   @ApiProperty({ example: 1 })
+  @Type(() => Number)
   @IsNumber()
   @IsNotEmpty()
   id!: number;
@@ -21,6 +22,7 @@ export class QuestionOptionDto {
   text!: string;
 
   @ApiProperty({ example: true })
+  @Type(() => Boolean)
   @IsBoolean()
   isCorrect!: boolean;
 }
@@ -42,7 +44,7 @@ export class CreateQuizDto {
   @ApiProperty({ example: 'Географія світу' })
   @IsString()
   @IsNotEmpty()
-  name!: string;
+  title!: string;
 
   @ApiProperty({ example: 'Географія' })
   @IsString()
@@ -50,11 +52,13 @@ export class CreateQuizDto {
   category!: string;
 
   @ApiProperty({ example: 5 })
+  @Type(() => Number)
   @IsNumber()
   @IsNotEmpty()
   timeToRead!: number;
 
   @ApiProperty({ example: 10 })
+  @Type(() => Number)
   @IsNumber()
   @IsNotEmpty()
   timeToPass!: number;
@@ -62,6 +66,6 @@ export class CreateQuizDto {
   @ApiProperty({ type: [QuestionDto] })
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => QuestionDto) 
+  @Type(() => QuestionDto)
   questions!: QuestionDto[];
 }

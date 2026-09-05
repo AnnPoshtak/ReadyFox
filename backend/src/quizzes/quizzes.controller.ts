@@ -62,7 +62,7 @@ export class QuizzesController {
     @Body() updateQuizDto: UpdateQuizDto,
   ) {
     const userId = req.user.id;
-    return this.quizzesService.update(id, userId, UpdateQuizDto);
+    return this.quizzesService.update(id, userId, updateQuizDto);
   }
 
   @ApiBearerAuth()

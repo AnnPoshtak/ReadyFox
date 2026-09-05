@@ -18,6 +18,10 @@ import Quizzes from "@/pages/dashboard/Quizzes/Quizzes";
 import QuizDetails from "@/pages/dashboard/QuizDetails/QuizDetails";
 import CreateQuiz from "@/pages/dashboard/CreateQuiz/CreateQuiz";
 import Rules from "@/pages/dashboard/Rules/Rules";
+import Lessons from "@/pages/dashboard/Lessons/Lessons";
+import LessonDetails from "@/pages/dashboard/LessonDetails/LessonDetails";
+import CreateLesson from "@/pages/dashboard/CreateLesson/CreateLesson";
+import LessonRules from "@/pages/dashboard/LessonRules/LessonRules";
 
 // Auth Pages
 import AuthPage from "@/pages/auth/Auth/Auth";
@@ -38,6 +42,10 @@ export const Router = () => {
                         <Route path="quizzes/:id" element={<QuizDetails />} />
                         <Route path="quizzes/new" element={<CreateQuiz />} />
                         <Route path="rules" element={<Rules />} />
+                        <Route path="lessons" element={<Lessons />} />
+                        <Route path="lessons/:id" element={<LessonDetails />} />
+                        <Route path="lessons/new" element={<CreateLesson />} />
+                        <Route path="lessons/rules" element={<LessonRules />} />
                     </Route>
                 </Route>
 

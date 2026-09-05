@@ -17,7 +17,7 @@ interface LocalQuestion {
 
 export default function CreateQuiz() {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
   const [selectedSubject, setSelectedSubject] = useState<Option | null>(null);
   const [timeToRead, setTimeToRead] = useState<number>(5);
   const [timeToPass, setTimeToPass] = useState<number>(15);
@@ -102,7 +102,7 @@ export default function CreateQuiz() {
     e.preventDefault();
     setError(null);
 
-    if (!name.trim()) {
+    if (!title.trim()) {
       setError("Будь ласка, вкажіть назву квізу.");
       return;
     }
@@ -126,21 +126,19 @@ export default function CreateQuiz() {
     }
 
     const payload = {
-      name: name.trim(),
+      title: title.trim(),
       category: selectedSubject.label,
       timeToRead: Number(timeToRead) || 5,
       timeToPass: Number(timeToPass) || 15,
-      questions: questions.map((q) => ({
+      questions: questions.map((q, qIdx) => ({
         questionText: q.questionText.trim(),
         options: q.options.map((opt, idx) => ({
-          id: idx + 1,
+          id: Number(opt.id) || qIdx * 10 + idx + 1,
           text: opt.text.trim(),
-          isCorrect: opt.isCorrect,
+          isCorrect: Boolean(opt.isCorrect),
         })),
       })),
     };
-
-    // Переходимо на сторінку правил і передаємо зібрані дані
     navigate("/dashboard/rules", { state: { quizData: payload } });
   };
 
@@ -165,8 +163,8 @@ export default function CreateQuiz() {
             </label>
             <input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               placeholder="Введіть назву квізу..."
               className="bg-cream py-3 px-4 rounded-xl w-full outline-none border border-outline focus:border-brand transition-colors text-xs font-bold text-foreground placeholder:text-foreground-muted placeholder:font-normal h-[42px]"
             />

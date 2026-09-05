@@ -63,11 +63,14 @@ export interface CreateQuizDto {
 }
 
 export type UpdateQuizDto = Partial<CreateQuizDto>;
-  
+
 export interface Quiz {
   id: number;
   title: string;
+  name?: string;
   category: string;
+  timeToRead?: number;
+  timeToPass?: number;
   createdAt: string;
   editedAt: string;
   author?: QuizAuthor;
@@ -83,15 +86,27 @@ export interface DeleteQuizResponse {
 export interface Lesson {
   id: number;
   title: string;
+  category?: string;
+  goal?: string;
   content: string;
+  mainMediaType?: "NONE" | "PRESENTATION" | "VIDEO";
+  mainMediaUrl?: string | null;
+  additionalResources?: Array<{ title: string; url: string }>;
   createdAt: string;
   editedAt: string;
   author?: QuizAuthor;
+  quiz?: { id: number; title?: string } | null;
 }
 
 export interface CreateLessonDto {
   title: string;
+  category: string;
+  goal: string;
   content: string;
+  mainMediaType?: "NONE" | "PRESENTATION" | "VIDEO";
+  mainMediaUrl?: string;
+  additionalResources?: Array<{ title: string; url: string }>;
+  quizId?: number;
 }
 
 export type UpdateLessonDto = Partial<CreateLessonDto>;

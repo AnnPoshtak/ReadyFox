@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 export const WelcomeBlock = ({ firstName }: { firstName: string }) => {
     const h1Texts = [
         `Привіт, ${firstName}!👋`,

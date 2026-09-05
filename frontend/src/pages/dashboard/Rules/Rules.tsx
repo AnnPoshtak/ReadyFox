@@ -196,7 +196,7 @@ export default function Rules() {
                                 />
                                 <span className="text-xs sm:text-sm font-semibold text-foreground">
                                     {hasScrolledHalf ? (
-                                        <>Я прочитав(-ла) та погоджуюся з правилами для квізу «<span className="text-brand font-bold">{quizData.name}</span>»</>
+                                        <>Я прочитав(-ла) та погоджуюся з правилами для квізу «<span className="text-brand font-bold">{quizData.title}</span>»</>
                                     ) : (
                                         <span className="text-foreground-muted flex items-center gap-1.5">
                                             <Lock className="w-3.5 h-3.5" />

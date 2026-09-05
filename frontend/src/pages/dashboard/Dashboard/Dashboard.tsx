@@ -1,19 +1,16 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { WelcomeBlock } from "./components/WelcomeBlock";
-import type { UserProfile, Quiz } from "@/api/types";
+import type { UserProfile, Quiz, Lesson } from "@/api/types";
 import { authApi } from "@/api/services/auth";
 import { quizzesApi } from "@/api/services/quizzes";
+import { lessonsApi } from "@/api/services/lessons";
 import { formatIsoTimestamp } from "@/utilities/FormatIsoTimestamp";
-
-const MOCK_LESSONS = [
-  { id: "l1", title: "Історія України: ХХ століття", createdAt: "10 травня" },
-  { id: "l2", title: "Вступ до органічної хімії", createdAt: "01 травня" },
-];
 
 export default function Main() {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [usersQuizzes, setUsersQuizzes] = useState<Quiz[]>([]);
+  const [userLessons, setUserLessons] = useState<Lesson[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigate();
 
@@ -42,7 +39,17 @@ export default function Main() {
       }
     };
 
+    const fetchUsersLessons = async () => {
+      try {
+        const data = await lessonsApi.findMyLessons();
+        setUserLessons(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     fetchUsersQuizzes();
+    fetchUsersLessons();
   }, []);
 
   if (isLoading) {
@@ -80,12 +87,12 @@ export default function Main() {
               Збирай інтерактивні питання та перевіряй знання учнів чи друзів.
             </p>
           </div>
-          <a
-            href="/quizzes/new"
+          <Link
+            to="/dashboard/quizzes/new"
             className="mt-6 inline-flex items-center justify-center w-full py-3 bg-brand-subtle text-brand border border-outline font-bold rounded-2xl hover:bg-brand-soft transition-colors text-center"
           >
             + Новий квіз
-          </a>
+          </Link>
         </div>
 
         <div className="p-6 bg-surface border border-outline rounded-3xl flex flex-col justify-between hover:border-outline-hover transition-all hover:shadow-md group">
@@ -98,21 +105,21 @@ export default function Main() {
               Ділися навчальними матеріалами, теорією та готовими конспектами.
             </p>
           </div>
-          <a
-            href="/lessons/new"
+          <Link
+            to="/dashboard/lessons/new"
             className="mt-6 inline-flex items-center justify-center w-full py-3 bg-brand-subtle text-brand border border-outline font-bold rounded-2xl hover:bg-brand-soft transition-colors text-center"
           >
             + Новий урок
-          </a>
+          </Link>
         </div>
       </section>
 
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-bold text-foreground">Твої квізи</h2>
-          <a href="/quizzes" className="text-sm font-bold text-brand hover:underline">
+          <Link to="/dashboard/quizzes" className="text-sm font-bold text-brand hover:underline">
             Усі квізи →
-          </a>
+          </Link>
         </div>
 
         <div className="flex overflow-x-auto gap-4 pb-2">
@@ -127,7 +134,7 @@ export default function Main() {
                 </span>
 
                 <h3 className="font-bold text-lg text-foreground line-clamp-2">
-                  {quiz.name}
+                  {quiz.title}
                 </h3>
 
                 {quiz.category && (
@@ -156,13 +163,13 @@ export default function Main() {
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-bold text-foreground">Твої уроки</h2>
-          <a href="/lessons" className="text-sm font-bold text-brand hover:underline">
+          <Link to="/dashboard/lessons" className="text-sm font-bold text-brand hover:underline">
             Усі уроки →
-          </a>
+          </Link>
         </div>
 
         <div className="flex overflow-x-auto gap-4 pb-2">
-          {MOCK_LESSONS.map((lesson) => (
+          {userLessons.map((lesson) => (
             <div
               key={lesson.id}
               className="w-72 sm:w-80 shrink-0 p-5 bg-surface border border-outline rounded-2xl flex flex-col justify-between hover:border-outline-hover transition-all hover:shadow-sm"
@@ -172,16 +179,22 @@ export default function Main() {
                   Урок
                 </span>
                 <h3 className="font-bold text-lg text-foreground line-clamp-2">{lesson.title}</h3>
+                {lesson.category && (
+                  <span className="inline-block text-xs font-semibold text-foreground-muted bg-outline/20 px-2.5 py-0.5 rounded-md border border-outline/50">
+                    {lesson.category}
+                  </span>
+                )}
               </div>
 
               <div className="pt-4 mt-4 border-t border-outline flex items-center justify-between text-sm">
-                <span className="text-xs text-foreground-muted">{lesson.createdAt}</span>
-                <a
-                  href={`/lessons/${lesson.id}/edit`}
-                  className="px-3.5 py-1.5 bg-brand-subtle text-brand font-bold rounded-xl hover:bg-brand-soft transition-colors border border-outline text-xs"
+                <span className="text-xs text-foreground-muted">{formatIsoTimestamp(lesson.createdAt)}</span>
+                <button
+                  type="button"
+                  onClick={() => navigation(`/dashboard/lessons/${lesson.id}`)}
+                  className="px-3.5 py-1.5 bg-brand-subtle text-brand font-bold rounded-xl hover:bg-brand-soft transition-colors border border-outline text-xs cursor-pointer"
                 >
-                  Редагувати
-                </a>
+                  Детальніше
+                </button>
               </div>
             </div>
           ))}

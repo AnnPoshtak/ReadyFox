@@ -120,7 +120,7 @@ export default function QuizDetails() {
         </div>
 
         <h1 className="text-3xl sm:text-4xl font-bold text-[var(--color-foreground)] mb-4 leading-tight">
-          {quiz.name}
+          {quiz.title}
         </h1>
 
         <div className="flex flex-wrap items-center gap-6 text-sm text-[var(--color-foreground-secondary)] pt-2 border-t border-[var(--color-outline)]/60">
