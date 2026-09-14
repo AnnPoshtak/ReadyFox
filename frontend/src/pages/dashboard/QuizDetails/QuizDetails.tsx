@@ -19,15 +19,19 @@ export default function QuizDetails() {
   const navigation = useNavigate();
   const [quiz, setQuiz] = useState<Quiz | null>(null);
   const [user, setUser] = useState<UserProfile | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchQuiz = async () => {
       if (!id) return;
       try {
-        const data = await quizzesApi.findOne(+id);
+        // Упевнимося, що передаємо ID безпечно
+        const data = await quizzesApi.findOne(Number(id));
         setQuiz(data);
       } catch (error) {
-        console.error(error);
+        console.error("Помилка при завантаженні квізу:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -40,7 +44,7 @@ export default function QuizDetails() {
         const data = await authApi.getProfile();
         setUser(data);
       } catch (error) {
-        console.error(error);
+        console.error("Помилка при завантаженні профілю:", error);
       }
     };
     fetchProfile();
@@ -49,18 +53,32 @@ export default function QuizDetails() {
   const isAuthor = quiz?.author?.email === user?.email;
 
   const handleDelete = async () => {
-    if (!id) return;
+    if (!id || !window.confirm("Ви дійсно бажаєте видалити цей квіз?")) return;
     try {
-      await quizzesApi.remove(+id);
+      await quizzesApi.remove(Number(id));
       navigation("/dashboard/quizzes");
     } catch (error) {
-      console.error(error);
+      console.error("Помилка при видаленні:", error);
     }
   };
 
   const handleEdit = () => {
     navigation(`/dashboard/quizzes/edit/${id}`);
   };
+
+  const handleStartHostGame = () => {
+    if (!quiz) return;
+    // Виправлено: передаємо quizId як ключ об'єкта
+    navigation("/quiz/host", { state: { quizId: quiz.id } });
+  };
+
+  if (isLoading) {
+    return (
+      <div className="text-center py-16 text-[var(--color-foreground-muted)]">
+        Завантаження квізу... 🦊
+      </div>
+    );
+  }
 
   if (!quiz) {
     return (
@@ -99,7 +117,7 @@ export default function QuizDetails() {
             </button>
             <button
               onClick={handleDelete}
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 rounded-xl transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-[var(--color-danger)] hover:opacity-90 rounded-xl transition-opacity cursor-pointer shadow-sm"
             >
               <Trash2 className="w-4 h-4" /> Видалити
             </button>
@@ -107,6 +125,7 @@ export default function QuizDetails() {
         )}
       </div>
 
+      {/* ШАПКА КВІЗУ */}
       <section className="bg-[var(--color-surface)] border border-[var(--color-outline)] rounded-3xl p-6 sm:p-10 shadow-sm relative overflow-hidden">
         <div className="absolute top-0 right-0 w-48 h-48 bg-[var(--color-brand-soft)] rounded-full blur-3xl -z-10 opacity-60 pointer-events-none" />
 
@@ -133,7 +152,9 @@ export default function QuizDetails() {
         </div>
       </section>
 
+      {/* КНОПКИ ЗАПУСКУ */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {/* Соло режим */}
         <div className="bg-[var(--color-surface)] border border-[var(--color-outline)] hover:border-[var(--color-brand)] transition-all duration-200 rounded-3xl p-6 sm:p-7 flex flex-col justify-between group shadow-sm hover:shadow-md">
           <div>
             <div className="w-12 h-12 rounded-2xl bg-[var(--color-brand-soft)] text-[var(--color-brand)] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
@@ -155,6 +176,7 @@ export default function QuizDetails() {
           </button>
         </div>
 
+        {/* Командний режим (Host) */}
         <div className="bg-[var(--color-surface)] border border-[var(--color-outline)] hover:border-[var(--color-brand)] transition-all duration-200 rounded-3xl p-6 sm:p-7 flex flex-col justify-between group shadow-sm hover:shadow-md">
           <div>
             <div className="w-12 h-12 rounded-2xl bg-[var(--color-brand-soft)] text-[var(--color-brand)] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
@@ -169,7 +191,7 @@ export default function QuizDetails() {
           </div>
 
           <button
-            onClick={() => console.log("Запуск для групи")}
+            onClick={handleStartHostGame}
             className="w-full py-3.5 px-6 bg-[var(--color-brand-soft)] hover:bg-[var(--color-brand)] text-[var(--color-brand)] hover:text-white font-bold rounded-2xl transition-colors flex items-center justify-center gap-2 cursor-pointer"
           >
             <Users className="w-5 h-5" /> Командна гра
@@ -177,6 +199,7 @@ export default function QuizDetails() {
         </div>
       </section>
 
+      {/* СПИСОК ПИТАНЬ */}
       <section className="bg-[var(--color-surface)] border border-[var(--color-outline)] rounded-3xl p-6 sm:p-8 shadow-sm">
         <div className="flex items-center justify-between mb-6 pb-4 border-b border-[var(--color-outline)]">
           <h2 className="text-xl sm:text-2xl font-bold text-[var(--color-foreground)] flex items-center gap-2">

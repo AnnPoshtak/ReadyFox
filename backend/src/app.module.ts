@@ -11,6 +11,8 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { QuizzesModule } from './quizzes/quizzes.module';
 import { LessonsModule } from './lessons/lessons.module';
+import { RedisModule } from './redis/redis.module';
+import { QuizRealtimeModule } from './quiz-realtime/quiz-realtime.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { LessonsModule } from './lessons/lessons.module';
     AuthModule,
     QuizzesModule,
     LessonsModule,
+    RedisModule,
+    QuizRealtimeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

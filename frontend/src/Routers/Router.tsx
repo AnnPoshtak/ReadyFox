@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom";
 
 // Layouts & Guard Routes
 import MainLayout from "@/layouts/MainLayout";
@@ -29,6 +29,11 @@ import { OAuthSuccess } from "@/pages/auth/OAuthSuccess/OAuthSuccess";
 
 // General Pages
 import NotFound from "@/pages/NotFound/NotFound";
+import Code from "@/pages/quiz/CodePage/CodePage";
+import Username from "@/pages/quiz/Username/Username";
+import HostLobby from "@/pages/quiz/HostLobby/HostLobby";
+import QuizSocket from "./QuizSocket";
+import Lobby from "@/pages/quiz/Lobby/Lobby";
 
 export const Router = () => {
     return (
@@ -59,6 +64,20 @@ export const Router = () => {
                     </Route>
                     <Route path="/auth" element={<AuthPage />} />
                     <Route path="/auth/callback" element={<OAuthSuccess />} />
+                </Route>
+
+                {/* SOСKET ROUTES */}
+                <Route element={<QuizSocket />}>
+                    <Route path="/quiz" element={<Outlet />}>
+                        <Route element={<ProtectedRoute />}>
+                            <Route path="host" element={<HostLobby />} />
+                        </Route>
+
+                        <Route path="code" element={<Code />} />
+                        <Route path="username" element={<Username />} />
+                        <Route path="lobby" element={<Lobby />} />
+                        <Route path="game" element={<QuizDetails />} />
+                    </Route>
                 </Route>
 
                 <Route path="*" element={<NotFound />} />
