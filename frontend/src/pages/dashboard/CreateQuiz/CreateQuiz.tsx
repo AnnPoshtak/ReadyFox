@@ -139,7 +139,7 @@ export default function CreateQuiz() {
         })),
       })),
     };
-    navigate("/dashboard/rules", { state: { quizData: payload } });
+    navigate("/dashboard/quizzes/rules", { state: { quizData: payload } });
   };
 
   return (
