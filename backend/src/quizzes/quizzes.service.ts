@@ -6,6 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Quiz } from './entities/quiz.entity';
+import { Question } from './entities/question.entity';
 import { CreateQuizDto } from './dto/create-quiz.dto';
 import { UpdateQuizDto } from './dto/update-quiz.dto';
 
@@ -14,7 +15,9 @@ export class QuizzesService {
   constructor(
     @InjectRepository(Quiz)
     private readonly quizRepository: Repository<Quiz>,
-  ) {}
+    @InjectRepository(Question)
+    private readonly questionRepository: Repository<Question>,
+  ) { }
 
   async create(userId: number, createQuizeDto: CreateQuizDto): Promise<Quiz> {
     const quiz = this.quizRepository.create({
@@ -78,15 +81,18 @@ export class QuizzesService {
   async update(
     id: number,
     userId: number,
-    updateQuizeDto: UpdateQuizDto,
+    updateQuizDto: UpdateQuizDto,
   ): Promise<Quiz> {
     const quiz = await this.findOne(id);
 
     if (quiz.author.id !== userId) {
       throw new ForbiddenException('You are not the owner of this quiz');
     }
-
-    const updatedQuiz = this.quizRepository.merge(quiz, updateQuizeDto);
+    if (updateQuizDto.questions) {
+      await this.questionRepository.delete({ quiz: { id } });
+      quiz.questions = [];
+    }
+    const updatedQuiz = this.quizRepository.merge(quiz, updateQuizDto);
 
     return this.quizRepository.save(updatedQuiz);
   }
