@@ -63,9 +63,9 @@ export default function Main() {
       <WelcomeBlock firstName={firstName} />
       <section className="p-6 sm:p-8 bg-brand-soft border border-outline rounded-3xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-sm">
         <div className="space-y-1 max-w-xl">
-          <h2 className="text-2xl font-bold text-foreground">Маєш код від вчителя чи друга?</h2>
+          <h2 className="text-2xl font-bold text-foreground">Маєте код для гри?</h2>
           <p className="text-foreground-secondary text-sm sm:text-base">
-            Вводь PIN-код та одразу приєднуйся до тестування!
+            Введіть PIN-код та одразу приєднуйтесь до гри!
           </p>
         </div>
 
@@ -84,7 +84,7 @@ export default function Main() {
             </span>
             <h3 className="text-xl font-bold text-foreground">Створити квіз</h3>
             <p className="text-sm text-foreground-secondary">
-              Збирай інтерактивні питання та перевіряй знання учнів чи друзів.
+              Проводьте інтерактивні тести та перевіряйте знання у цікавій формі
             </p>
           </div>
           <Link
@@ -102,7 +102,7 @@ export default function Main() {
             </span>
             <h3 className="text-xl font-bold text-foreground">Створити урок</h3>
             <p className="text-sm text-foreground-secondary">
-              Ділися навчальними матеріалами, теорією та готовими конспектами.
+              Діліться навчальними матеріалами, теорією та готовими конспектами.
             </p>
           </div>
           <Link
@@ -116,10 +116,7 @@ export default function Main() {
 
       <section className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-foreground">Твої квізи</h2>
-          <Link to="/dashboard/quizzes" className="text-sm font-bold text-brand hover:underline">
-            Усі квізи →
-          </Link>
+          <h2 className="text-2xl font-bold text-foreground">Ваші квізи</h2>
         </div>
 
         <div className="flex overflow-x-auto gap-4 pb-2">
@@ -162,10 +159,7 @@ export default function Main() {
 
       <section className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-foreground">Твої уроки</h2>
-          <Link to="/dashboard/lessons" className="text-sm font-bold text-brand hover:underline">
-            Усі уроки →
-          </Link>
+          <h2 className="text-2xl font-bold text-foreground">Ваші уроки</h2>
         </div>
 
         <div className="flex overflow-x-auto gap-4 pb-2">
