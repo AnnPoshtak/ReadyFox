@@ -14,14 +14,14 @@ import AboutPage from "@/pages/landing/About/AboutPage";
 
 // Dashboard Pages
 import Dashboard from "@/pages/dashboard/Dashboard/Dashboard";
-import Quizzes from "@/pages/dashboard/Quizzes/Quizzes";
-import QuizDetails from "@/pages/dashboard/QuizDetails/QuizDetails";
-import CreateQuiz from "@/pages/dashboard/CreateQuiz/CreateQuiz";
-import Rules from "@/pages/dashboard/QuizRules/QuizRules";
-import Lessons from "@/pages/dashboard/Lessons/Lessons";
-import LessonDetails from "@/pages/dashboard/LessonDetails/LessonDetails";
-import CreateLesson from "@/pages/dashboard/CreateLesson/CreateLesson";
-import LessonRules from "@/pages/dashboard/LessonRules/LessonRules";
+import Quizzes from "@/pages/dashboard/quizzes/Quizzes/Quizzes";
+import QuizDetails from "@/pages/dashboard/quizzes/QuizDetails/QuizDetails";
+import CreateQuiz from "@/pages/dashboard/quizzes/CreateQuiz/CreateQuiz";
+import Rules from "@/pages/dashboard/quizzes/QuizRules/QuizRules";
+import Lessons from "@/pages/dashboard/lessons/Lessons/Lessons";
+import LessonDetails from "@/pages/dashboard/lessons/LessonDetails/LessonDetails";
+import CreateLesson from "@/pages/dashboard/lessons/CreateLesson/CreateLesson";
+import LessonRules from "@/pages/dashboard/lessons/LessonRules/LessonRules";
 
 // Auth Pages
 import AuthPage from "@/pages/auth/Auth/Auth";
@@ -29,8 +29,8 @@ import { OAuthSuccess } from "@/pages/auth/OAuthSuccess/OAuthSuccess";
 
 // General Pages
 import NotFound from "@/pages/NotFound/NotFound";
-import EditQuiz from "@/pages/dashboard/EditQuiz/EditQuiz";
-import EditLesson from "@/pages/dashboard/EditLesson/EditLesson";
+import EditQuiz from "@/pages/dashboard/quizzes/EditQuiz/EditQuiz";
+import EditLesson from "@/pages/dashboard/lessons/EditLesson/EditLesson";
 
 export const Router = () => {
     return (
