@@ -1,10 +1,21 @@
 import { useEffect, useState } from "react";
+import { MdEditor, config } from 'md-editor-rt';
+import { ukUA } from "@/constants/mdUk";
+import 'md-editor-rt/lib/style.css';
 import { useNavigate } from "react-router-dom";
 import { Plus, Trash2, BookOpen, AlertCircle, ArrowRight, Clock3, FileText, Link2 } from "lucide-react";
 import CustomSelect from "@/components/CustomSelect";
 import { SUBJECT_OPTIONS, type Option } from "@/constants/subjects";
 import { quizzesApi } from "@/api/services/quizzes";
 import type { Quiz } from "@/api/types";
+
+config({
+  editorConfig: {
+    languageUserDefined: {
+      "uk-UA": ukUA,
+    },
+  },
+});
 
 interface LocalResource {
   title: string;
@@ -173,12 +184,23 @@ export default function CreateLesson() {
               <BookOpen className="w-4 h-4 text-brand" />
               Зміст уроку
             </label>
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              rows={8}
-              placeholder="Напишіть теоретичну частину, пояснення та інформацію уроку..."
-              className="bg-cream py-3 px-4 rounded-xl w-full outline-none border border-outline focus:border-brand transition-colors text-xs font-bold text-foreground placeholder:text-foreground-muted placeholder:font-normal resize-none"
+            <MdEditor
+              modelValue={content}
+              onChange={setContent}
+              language="uk-UA"
+              toolbars={[
+                "title",          // Заголовки (h1-h6)
+                "unorderedList", // Маркований список (пункти)
+                "orderedList",   // Нумерований список (пункти)
+                "codeRow",       // Рядок коду
+                "code",          // Блок коду
+                "link",          // Посилання
+                "table",         // Таблиці
+                "katex",         // Формули
+                "-",             // Розділювач
+                "pageFullscreen",// На весь екран (всередині сторінки)
+                "fullscreen"     // На весь екран (повноекранний режим)
+              ]}
             />
           </div>
         </div>
