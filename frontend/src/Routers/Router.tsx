@@ -30,6 +30,7 @@ import { OAuthSuccess } from "@/pages/auth/OAuthSuccess/OAuthSuccess";
 // General Pages
 import NotFound from "@/pages/NotFound/NotFound";
 import EditQuiz from "@/pages/dashboard/EditQuiz/EditQuiz";
+import EditLesson from "@/pages/dashboard/EditLesson/EditLesson";
 
 export const Router = () => {
     return (
@@ -47,6 +48,7 @@ export const Router = () => {
                         <Route path="lessons" element={<Lessons />} />
                         <Route path="lessons/:id" element={<LessonDetails />} />
                         <Route path="lessons/new" element={<CreateLesson />} />
+                        <Route path="lessons/edit/:id" element={<EditLesson />} />
                         <Route path="lessons/rules" element={<LessonRules />} />
                     </Route>
                 </Route>
