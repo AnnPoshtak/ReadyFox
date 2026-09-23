@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
-body{
-  background-color: #FFFDF9;
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 @theme {
@@ -44,7 +46,7 @@ body{
   --color-highlight: #FFD54A;
   --color-shadow: rgb(255 107 0 / 0.15);
 
-  /* Extra colors used on the landing */
+  /* Extra colors */
   --color-cream: #FFF4E7;
   --color-peach: #FFE4C4;
   --color-orange-light: #FF9B42;
@@ -54,14 +56,40 @@ body{
   --color-icon: #F8B24E;
 }
 
+@layer base {
+  .dark {
+    --color-brand-soft: #2A1A0E;
+    --color-brand-subtle: #23150B;
+
+    --color-background: #121212;
+    --color-background-secondary: #1A1A1A;
+    --color-surface: #1E1E1E;
+    --color-surface-hover: #262626;
+
+    --color-foreground: #F5EBE6;
+    --color-foreground-secondary: #D1C2B8;
+    --color-foreground-muted: #8C7B70;
+
+    --color-outline: #2D2621;
+    --color-outline-hover: #42362E;
+
+    --color-shadow: rgb(0 0 0 / 0.5);
+
+    --color-cream: #241B14;
+    --color-peach: #382417;
+    --color-brown: #EAD0C3;
+    --color-brown-light: #CBB4A7;
+  }
+}
+
 * {
   scrollbar-width: fat;
   scrollbar-color: var(--color-brand) var(--color-brand-soft);
 }
 
 ::-webkit-scrollbar {
-  width: 5px; 
-  height: 8px; 
+  width: 5px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
