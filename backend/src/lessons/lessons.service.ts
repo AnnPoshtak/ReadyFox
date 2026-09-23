@@ -8,12 +8,16 @@ import { Repository } from 'typeorm';
 import { Lesson } from './entities/lesson.entity';
 import { CreateLessonDto } from './dto/create-lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
+import { CompleteLessonDto } from './dto/complete-lesson.dto';
+import { UserLessonProgress } from './entities/user-lesson-progress.entity';
 
 @Injectable()
 export class LessonsService {
   constructor(
     @InjectRepository(Lesson)
     private readonly lessonRepository: Repository<Lesson>,
+    @InjectRepository(UserLessonProgress)
+    private readonly userLessonProgressRepository: Repository<UserLessonProgress>,
   ) {}
 
   async create(userId: number, createLessonDto: CreateLessonDto): Promise<Lesson> {
@@ -28,6 +32,32 @@ export class LessonsService {
     return this.lessonRepository.save(lesson);
   }
 
+  async completeLesson(userId: number, completeLessonDto: CompleteLessonDto): Promise<Lesson> {
+    const { lessonId } = completeLessonDto;
+    const lesson = await this.lessonRepository.findOne({ where: { id: lessonId } });
+
+    if (!lesson) {
+      throw new NotFoundException(`Lesson with ID ${lessonId} not found`);
+    }
+
+    const existingProgress = await this.userLessonProgressRepository.findOne({
+      where: { userId, lessonId },
+    });
+
+    if (existingProgress) {
+      return lesson;
+    }
+
+    const userLessonProgress = this.userLessonProgressRepository.create({
+      userId,
+      lessonId,
+      isCompleted: true,
+    });
+    
+    await this.userLessonProgressRepository.save(userLessonProgress);
+    return lesson;
+  }
+  
   async findAll(): Promise<Lesson[]> {
     return this.lessonRepository.find({
       relations: {

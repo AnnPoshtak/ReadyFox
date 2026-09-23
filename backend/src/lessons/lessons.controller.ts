@@ -16,12 +16,13 @@ import { CreateLessonDto } from './dto/create-lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { PassportJwtAuthGuard } from '../auth/guards/passport-jwt.guard';
 import { Public } from '../auth/decorators/public.decorator';
+import { CompleteLessonDto } from './dto/complete-lesson.dto';
 
 @ApiTags('Lessons')
 @UseGuards(PassportJwtAuthGuard)
 @Controller('lessons')
 export class LessonsController {
-  constructor(private readonly lessonsService: LessonsService) {}
+  constructor(private readonly lessonsService: LessonsService) { }
 
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create a new lesson' })
@@ -29,6 +30,14 @@ export class LessonsController {
   create(@Req() req: any, @Body() createLessonDto: CreateLessonDto) {
     const userId = req.user.id;
     return this.lessonsService.create(userId, createLessonDto);
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Complete a lesson' })
+  @Post('complete')
+  complete(@Req() req: any, @Body() completeLessonDto: CompleteLessonDto) {
+    const userId = req.user.id;
+    return this.lessonsService.completeLesson(userId, completeLessonDto);
   }
 
   @Public()
@@ -45,6 +54,15 @@ export class LessonsController {
     const userId = req.user.id;
     return this.lessonsService.findByUser(userId);
   }
+
+  /*
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get user`s lessons results' })
+  @Get('my/results')
+  findMyLessonsResults(@Req() req: any) {
+    const userId = req.user.id;
+    return this.lessonsService.findMyLessonsResults(userId);
+  }*/
 
   @Public()
   @ApiOperation({ summary: 'Get lesson by ID' })
@@ -72,4 +90,5 @@ export class LessonsController {
     const userId = req.user.id;
     return this.lessonsService.remove(id, userId);
   }
+
 }
