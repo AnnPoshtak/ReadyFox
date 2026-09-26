@@ -12,6 +12,10 @@ export const lessonsApi = {
     return response.data;
   },
 
+  complete: async (id: number): Promise<void> => {
+    await api.post(`/lessons/complete`, { lessonId: id });
+  },
+
   findAll: async (): Promise<Lesson[]> => {
     const response = await api.get<Lesson[]>('/lessons');
     return response.data;

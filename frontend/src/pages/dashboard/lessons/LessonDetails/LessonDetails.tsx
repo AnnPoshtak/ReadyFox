@@ -160,7 +160,7 @@ export default function LessonDetails() {
 
           <button
             type="button"
-            onClick={() => console.log("Start lesson")}
+            onClick={() => navigation(`lesson/`)}
             className="w-full py-3.5 px-6 bg-brand text-white font-bold rounded-2xl hover:bg-brand-hover active:bg-brand-active transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
           >
             <Play className="w-5 h-5 fill-current" /> Почати урок
