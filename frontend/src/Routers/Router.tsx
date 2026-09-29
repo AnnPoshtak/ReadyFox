@@ -32,6 +32,8 @@ import NotFound from "@/pages/NotFound/NotFound";
 import EditQuiz from "@/pages/dashboard/quizzes/EditQuiz/EditQuiz";
 import EditLesson from "@/pages/dashboard/lessons/EditLesson/EditLesson";
 import Lesson from "@/pages/dashboard/lessons/Lesson/Lesson";
+import Quiz from "@/pages/dashboard/quizzes/Quiz/Quiz";
+import QuizResults from "@/pages/dashboard/quizzes/QuizResults/QuizResults";
 
 export const Router = () => {
     return (
@@ -46,6 +48,8 @@ export const Router = () => {
                         <Route path="quizzes/new" element={<CreateQuiz />} />
                         <Route path="quizzes/edit/:id" element={<EditQuiz />} />
                         <Route path="quizzes/rules" element={<Rules />} />
+                        <Route path="quizzes/:id/quiz" element={<Quiz />} />
+                        <Route path="quizzes/:id/results" element={<QuizResults />} />
                         <Route path="lessons" element={<Lessons />} />
                         <Route path="lessons/:id" element={<LessonDetails />} />
                         <Route path="lessons/new" element={<CreateLesson />} />

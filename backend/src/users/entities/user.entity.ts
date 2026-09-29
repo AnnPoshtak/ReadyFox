@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Quiz } from 'src/quizzes/entities/quiz.entity'; 
 import { UserLessonProgress } from '@/lessons/entities/user-lesson-progress.entity';
+import { UserQuizProgress } from '@/quizzes/entities/user-quiz-progress.entity';
 
 @Entity('users')
 export class User {
@@ -31,6 +32,9 @@ export class User {
 
   @OneToMany(() => UserLessonProgress, (progress) => progress.user)
   lessonProgress: UserLessonProgress[];
+
+  @OneToMany(() => UserQuizProgress, (progress) => progress.user)
+  quizProgress: UserQuizProgress[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

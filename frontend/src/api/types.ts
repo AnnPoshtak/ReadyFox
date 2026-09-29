@@ -81,6 +81,17 @@ export interface DeleteQuizResponse {
   message: string;
 }
 
+export interface CompletedQuizDto {
+  quizId: number;
+  answers: { questionId: number; selectedOptionId: number }[];
+}
+
+export interface QuizResults {
+  score: number;
+  grade12: number;
+  correctAnswers: number;
+  totalQuestions: number;
+}
 
 // Lessons
 export interface Lesson {

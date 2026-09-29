@@ -16,12 +16,13 @@ import { CreateQuizDto } from './dto/create-quiz.dto';
 import { UpdateQuizDto } from './dto/update-quiz.dto';
 import { PassportJwtAuthGuard } from '../auth/guards/passport-jwt.guard';
 import { Public } from '../auth/decorators/public.decorator';
+import { CompleteQuizDto } from './dto/complete-quiz.dto';
 
 @ApiTags('Quizzes')
 @UseGuards(PassportJwtAuthGuard)
 @Controller('quizzes')
 export class QuizzesController {
-  constructor(private readonly quizzesService: QuizzesService) {}
+  constructor(private readonly quizzesService: QuizzesService) { }
 
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create a new quiz' })
@@ -30,6 +31,15 @@ export class QuizzesController {
     const userId = req.user.id;
     return this.quizzesService.create(userId, createQuizDto);
   }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Submit quiz answers' })
+  @Post('submit')
+  submitQuiz(@Req() req: any, @Body() payload: CompleteQuizDto) {
+    const userId = req.user.id;
+    return this.quizzesService.submitQuiz(userId, payload);
+  }
+
 
   @Public()
   @ApiOperation({ summary: 'Get all quizzes' })
@@ -47,10 +57,16 @@ export class QuizzesController {
   }
 
   @Public()
-  @ApiOperation({ summary: 'Get quiz by ID' })
+  @ApiOperation({ summary: 'Get quiz by ID with answers (for preview/edit)' })
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.quizzesService.findOne(id);
+  }
+
+  @ApiOperation({ summary: 'Get quiz by ID without answers (for passing the test)' })
+  @Get(':id/pass')
+  findOneWithoutAnswers(@Param('id', ParseIntPipe) id: number) {
+    return this.quizzesService.findOneWithoutAnswers(id);
   }
 
   @ApiBearerAuth()

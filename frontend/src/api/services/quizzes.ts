@@ -27,6 +27,16 @@ export const quizzesApi = {
     return response.data;
   },
 
+  findOneWithoutAnswers: async (id: number): Promise<Quiz> => {
+    const response = await api.get<Quiz>(`/quizzes/${id}/pass`);
+    return response.data;
+  },
+
+  submitQuiz: async (payload: any): Promise<any> => {
+    const response = await api.post<any>('/quizzes/submit', payload);
+    return response.data;
+  },
+
   update: async (id: number, dto: UpdateQuizDto): Promise<Quiz> => {
     const response = await api.patch<Quiz>(`/quizzes/${id}`, dto);
     return response.data;

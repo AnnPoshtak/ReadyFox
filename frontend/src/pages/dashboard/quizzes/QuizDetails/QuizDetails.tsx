@@ -24,7 +24,7 @@ export default function QuizDetails() {
     const fetchQuiz = async () => {
       if (!id) return;
       try {
-        const data = await quizzesApi.findOne(+id);
+        const data = await quizzesApi.findOneWithoutAnswers(+id);
         setQuiz(data);
       } catch (error) {
         console.error(error);
@@ -148,7 +148,7 @@ export default function QuizDetails() {
           </div>
           
           <button
-            onClick={() => console.log("Запуск соло")}
+            onClick={() => navigation("quiz")}
             className="w-full py-3.5 px-6 bg-[var(--color-brand)] hover:bg-[var(--color-brand-hover)] active:bg-[var(--color-brand-active)] text-white font-bold rounded-2xl transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
           >
             <Play className="w-5 h-5 fill-current" /> Соло-режим
