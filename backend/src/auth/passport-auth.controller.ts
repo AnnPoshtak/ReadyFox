@@ -30,6 +30,12 @@ export class PassportAuthController {
         return request.user;
     }
 
+    @Get("me/stats")
+    @UseGuards(PassportJwtAuthGuard)
+    getUserStats(@Request() request: any) {
+        return this.authService.getUserFullHistory(request.user);
+    }
+
     @Public()
     @Get('google')
     @UseGuards(GoogleAuthGuard)

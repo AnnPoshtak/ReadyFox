@@ -12,7 +12,6 @@ import { User } from 'src/users/entities/user.entity';
 import { Lesson } from 'src/lessons/entities/lesson.entity'; 
 
 @Entity('user_lesson_progress')
-@Unique(['userId', 'lessonId']) 
 export class UserLessonProgress {
   @PrimaryGeneratedColumn()
   id: number;

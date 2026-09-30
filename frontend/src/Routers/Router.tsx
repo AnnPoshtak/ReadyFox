@@ -34,6 +34,7 @@ import EditLesson from "@/pages/dashboard/lessons/EditLesson/EditLesson";
 import Lesson from "@/pages/dashboard/lessons/Lesson/Lesson";
 import Quiz from "@/pages/dashboard/quizzes/Quiz/Quiz";
 import QuizResults from "@/pages/dashboard/quizzes/QuizResults/QuizResults";
+import { StatsOverview } from "@/pages/dashboard/StatsOverview/StatsOverview";
 
 export const Router = () => {
     return (
@@ -56,6 +57,7 @@ export const Router = () => {
                         <Route path="lessons/edit/:id" element={<EditLesson />} />
                         <Route path="lessons/rules" element={<LessonRules />} />
                         <Route path="lessons/:id/lesson" element={<Lesson />} />
+                        <Route path="results" element={<StatsOverview />} />
                     </Route>
                 </Route>
 

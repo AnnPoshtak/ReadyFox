@@ -29,6 +29,11 @@ export const authApi = {
     return response.data;
   },
 
+  getStats: async(): Promise<any> => {
+    const response = await api.get<any>("/auth/me/stats");
+    return response.data
+  },
+
   logout: async (): Promise<LogoutResponse> => {
     try {
       const response = await api.post<LogoutResponse>('/auth/logout');

@@ -44,10 +44,6 @@ export class LessonsService {
       where: { userId, lessonId },
     });
 
-    if (existingProgress) {
-      return lesson;
-    }
-
     const userLessonProgress = this.userLessonProgressRepository.create({
       userId,
       lessonId,

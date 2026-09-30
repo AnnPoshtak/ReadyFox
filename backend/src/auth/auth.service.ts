@@ -105,4 +105,8 @@ export class AuthService {
       email: newUser.email,
     };
   }
+
+  async getUserFullHistory(user: any){
+    return await this.usersService.getUserFullHistory(user.id)
+  }
 }

@@ -3,12 +3,18 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
+import { UserLessonProgress } from '@/lessons/entities/user-lesson-progress.entity';
+import { UserQuizProgress } from '@/quizzes/entities/user-quiz-progress.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepo: Repository<User>,
+    @InjectRepository(UserLessonProgress)
+    private readonly lessonProgressRepo: Repository<UserLessonProgress>,
+    @InjectRepository(UserQuizProgress)
+    private readonly quizProgressRepo: Repository<UserQuizProgress>,
   ) { }
 
   async findUserByEmail(email: string): Promise<User | null> {
@@ -76,5 +82,70 @@ export class UsersService {
 
   async removeRefreshToken(userId: number) {
     await this.usersRepo.update(userId, { hashedRefreshToken: null });
+  }
+
+  async getUserFullHistory(userId: number) {
+    const lessonsProgress = await this.lessonProgressRepo.find({
+      where: { user: { id: userId } },
+      relations: {
+        lesson: true,
+      },
+      select: {
+        id: true,
+        lessonId: true,
+        isCompleted: true,
+        completedAt: true,
+        lesson: {
+          id: true,
+          title: true,
+          category: true, 
+        },
+      },
+      order: { completedAt: 'DESC' },
+    });
+
+    const quizzesProgress = await this.quizProgressRepo.find({
+      where: { userId },
+      relations: {
+        quiz: true,
+      },
+      select: {
+        id: true,
+        quizId: true,
+        score: true,
+        grade12: true,
+        rawScore: true,
+        maxScore: true,
+        completedAt: true,
+        quiz: {
+          id: true,
+          title: true,
+          category: true,
+        },
+      },
+      order: { completedAt: 'DESC' },
+    });
+
+    return {
+      lessons: lessonsProgress.map((item) => ({
+        id: item.id,
+        lessonId: item.lessonId,
+        title: item.lesson?.title,
+        subject: item.lesson?.category,
+        isCompleted: item.isCompleted,
+        completedAt: item.completedAt,
+      })),
+      quizzes: quizzesProgress.map((item) => ({
+        id: item.id,
+        quizId: item.quizId,
+        title: item.quiz?.title,
+        subject: item.quiz?.category,
+        score: item.score,
+        grade12: item.grade12,
+        rawScore: item.rawScore,
+        maxScore: item.maxScore,
+        completedAt: item.completedAt,
+      })),
+    };
   }
 }
