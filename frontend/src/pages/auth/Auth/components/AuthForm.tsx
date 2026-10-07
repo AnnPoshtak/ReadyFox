@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Player } from "@lottiefiles/react-lottie-player";
+import stickerAnimation from "/stickers/020.json?url"
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 
 import { GoogleIcon } from "./GoogleIcon";
@@ -43,7 +44,7 @@ export const AuthForm = () => {
       <div className="w-full max-w-md bg-surface border-2 border-outline/60 rounded-3xl p-6 sm:p-8 shadow-xl shadow-shadow/10 relative z-10 animate-in fade-in zoom-in-95 duration-500">
         <div className="flex lg:hidden flex-col items-center mb-4">
           <div className="w-24 h-24 mb-2">
-            <Player src="/stickers/020.json" loop autoplay className="w-full h-full" />
+            <Player src={stickerAnimation} loop autoplay className="w-full h-full" />
           </div>
         </div>
 

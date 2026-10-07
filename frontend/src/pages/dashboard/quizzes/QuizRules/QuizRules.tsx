@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Player } from "@lottiefiles/react-lottie-player";
+import stickerAnimation from "/stickers/022.json?url"
 import { 
     BookOpen, 
     Lightbulb, 
@@ -31,7 +32,6 @@ export default function Rules() {
     const [hasScrolledHalf, setHasScrolledHalf] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    // Відстеження 50% скролу сторінки
     useEffect(() => {
         const handleScroll = () => {
             const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
@@ -66,7 +66,6 @@ export default function Rules() {
         <div className="min-h-screen bg-background text-foreground font-sans selection:bg-brand selection:text-foreground-inverse">
             <main className="max-w-5xl mx-auto px-6 py-12 md:py-20 space-y-12">
                 
-                {/* Hero */}
                 <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     <div className="lg:col-span-7 space-y-4">
                         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-peach/60 text-foreground-secondary font-heading text-xs uppercase tracking-wider font-bold border border-outline">
@@ -84,14 +83,13 @@ export default function Rules() {
 
                     <div className="lg:col-span-5 flex justify-center">
                         <div className="w-full max-w-[260px] sm:max-w-xs drop-shadow-md">
-                            <Player src="/stickers/022.json" loop autoplay className="w-full h-auto" />
+                            <Player src={stickerAnimation} loop autoplay className="w-full h-auto" />
                         </div>
                     </div>
                 </section>
 
                 <hr className="border-outline" />
 
-                {/* Що можна публікувати */}
                 <section className="space-y-6">
                     <div className="space-y-1">
                         <span className="text-xs font-bold uppercase tracking-wider text-success">Дозволений контент</span>
@@ -133,7 +131,6 @@ export default function Rules() {
 
                 <hr className="border-outline" />
 
-                {/* Що заборонено */}
                 <section className="space-y-6">
                     <div className="space-y-1">
                         <span className="text-xs font-bold uppercase tracking-wider text-danger">Обмеження</span>
@@ -160,7 +157,6 @@ export default function Rules() {
                     </div>
                 </section>
 
-                {/* Модерація */}
                 <section className="p-6 rounded-2xl bg-cream border border-outline flex items-center gap-4">
                     <div className="w-10 h-10 rounded-xl bg-brand text-foreground-inverse flex items-center justify-center shrink-0">
                         <UserX className="w-5 h-5" />
@@ -173,7 +169,6 @@ export default function Rules() {
                     </div>
                 </section>
 
-                {/* Сумніви */}
                 <section className="p-5 rounded-2xl bg-brand-subtle border border-outline text-center space-y-1">
                     <HelpCircle className="w-5 h-5 text-brand mx-auto" />
                     <h3 className="font-heading font-bold text-sm">Сумніваєтеся, чи можна публікувати?</h3>
@@ -182,7 +177,6 @@ export default function Rules() {
                     </p>
                 </section>
 
-                {/* Блок створення в кінці сторінки */}
                 {quizData && (
                     <section className="p-6 rounded-2xl bg-surface border border-outline shadow-sm space-y-4">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">

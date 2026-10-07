@@ -1,6 +1,6 @@
 import { BlobShape } from "@/components/BlobShape"
 import { Player } from "@lottiefiles/react-lottie-player"
-import stickerAnimation from "@/../public/stickers/017.json";
+import stickerAnimation from "/stickers/017.json?url";
 import { ArrowRight, KeyRound } from "lucide-react"
 import { useNavigate } from "react-router-dom";
 

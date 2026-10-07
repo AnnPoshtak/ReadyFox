@@ -1,4 +1,5 @@
 import { Player } from "@lottiefiles/react-lottie-player"
+import stickerAnimation from "/stickers/020.json?url"
 
 export const AuthBanner = () => {
     return (
@@ -11,7 +12,7 @@ export const AuthBanner = () => {
 
             <div className="w-64 h-64 md:w-80 md:h-80 relative z-10 mb-6 drop-shadow-xl hover:scale-105 transition-transform duration-500 ease-out">
                 <Player
-                    src="/stickers/020.json"
+                    src={stickerAnimation}
                     loop
                     autoplay
                     className="w-full h-full object-contain"

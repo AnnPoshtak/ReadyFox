@@ -1,5 +1,5 @@
 import { BlobShape } from "@/components/BlobShape"
-import stickerAnimation from "@/../public/stickers/012.json";
+import stickerAnimation from "/stickers/012.json?url";
 import { Player } from "@lottiefiles/react-lottie-player";
 
 export const HeroSection = () => {

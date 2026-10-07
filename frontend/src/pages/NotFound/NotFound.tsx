@@ -1,5 +1,6 @@
 import { Player } from "@lottiefiles/react-lottie-player";
 import { useNavigate } from "react-router-dom";
+import stickerAnimation from "/stickers/023.json?url"
 
 export default function NotFound() {
     const navigate = useNavigate();
@@ -8,7 +9,7 @@ export default function NotFound() {
         <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 text-center font-sans overflow-hidden">
             <div className="relative flex items-center justify-center mb-6">
                 <Player
-                    src="/stickers/023.json"
+                    src={stickerAnimation}
                     className="w-64 h-64 sm:w-80 sm:h-80 relative z-10"
                     loop
                     autoplay

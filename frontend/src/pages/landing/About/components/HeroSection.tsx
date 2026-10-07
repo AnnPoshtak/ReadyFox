@@ -1,6 +1,6 @@
 import { Player } from "@lottiefiles/react-lottie-player";
 import { BlobShape } from "@/components/BlobShape";
-import stickerAnimation from "@/../public/stickers/010.json";
+import stickerAnimation from "/stickers/010.json?url";
 
 export function HeroSection() {
     return (

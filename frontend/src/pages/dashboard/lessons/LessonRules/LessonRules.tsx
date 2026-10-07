@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Player } from "@lottiefiles/react-lottie-player";
+import stickerAnimation from "/stickers/022.json?url"
 import {
   BookOpen,
   Lightbulb,
@@ -81,7 +82,7 @@ export default function LessonRules() {
 
           <div className="lg:col-span-5 flex justify-center">
             <div className="w-full max-w-[260px] sm:max-w-xs drop-shadow-md">
-              <Player src="/stickers/022.json" loop autoplay className="w-full h-auto" />
+              <Player src={stickerAnimation} loop autoplay className="w-full h-auto" />
             </div>
           </div>
         </section>
