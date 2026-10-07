@@ -1,58 +1,63 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Menu, X } from "lucide-react"; // npm i lucide-react
+import { Menu, X } from "lucide-react"; 
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
   const closeMenu = () => setIsOpen(false);
+  
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     `transition-colors hover:text-brand ${
       isActive ? "text-brand font-semibold" : "text-foreground"
     }`;
 
   return (
-    <header className="relative max-w-7xl mx-auto px-6 py-5 flex items-center justify-between bg-background z-50">
-      <Link to="/" onClick={closeMenu} className="flex items-center gap-3 select-none z-50">
-        <img src="/logo.png" alt="ReadyFox Logo" className="h-10 w-auto object-contain" />
-        <span className="font-heading text-2xl font-bold text-foreground tracking-tight">
-          Ready<span className="text-brand">Fox</span>
-        </span>
-      </Link>
-      <nav className="hidden md:flex items-center gap-8 font-sans font-medium">
-        <NavLink to="/how-it-works" className={linkClass}>
-          Як це працює
-        </NavLink>
-        <NavLink to="/features" className={linkClass}>
-          Можливості
-        </NavLink>
-        <NavLink to="/about" className={linkClass}>
-          Про нас
-        </NavLink>
-      </nav>
-      <div className="flex items-center gap-3 z-50">
-        <Link 
-          to="/auth"
-          onClick={closeMenu}
-          className="hidden sm:inline-block px-5 py-2.5 rounded-xl border border-outline bg-brand-subtle hover:bg-brand-soft text-brand font-heading font-semibold text-sm transition-all text-center"
-        >
-          Увійти в акаунт
+    <header className="sticky top-0 z-50 w-full border-b border-outline/40 bg-background/95 backdrop-blur-md">
+      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <Link to="/" onClick={closeMenu} className="flex items-center gap-3 select-none z-50">
+          <img src="/logo.png" alt="ReadyFox Logo" className="h-10 w-auto object-contain" />
+          <span className="font-heading text-2xl font-bold text-foreground tracking-tight">
+            Ready<span className="text-brand">Fox</span>
+          </span>
         </Link>
 
-        <button
-          onClick={toggleMenu}
-          type="button"
-          aria-label="Toggle Menu"
-          aria-expanded={isOpen}
-          className="md:hidden p-2 rounded-xl text-foreground hover:bg-brand-subtle transition-colors focus:outline-none"
-        >
-          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        <nav className="hidden md:flex items-center gap-8 font-sans font-medium">
+          <NavLink to="/how-it-works" className={linkClass}>
+            Як це працює
+          </NavLink>
+          <NavLink to="/features" className={linkClass}>
+            Можливості
+          </NavLink>
+          <NavLink to="/about" className={linkClass}>
+            Про нас
+          </NavLink>
+        </nav>
+
+        <div className="flex items-center gap-3 z-50">
+          <Link 
+            to="/auth"
+            onClick={closeMenu}
+            className="hidden sm:inline-block px-5 py-2.5 rounded-xl border border-outline bg-brand-subtle hover:bg-brand-soft text-brand font-heading font-semibold text-sm transition-all text-center"
+          >
+            Увійти в акаунт
+          </Link>
+
+          <button
+            onClick={toggleMenu}
+            type="button"
+            aria-label="Toggle Menu"
+            aria-expanded={isOpen}
+            className="md:hidden p-2 rounded-xl text-foreground hover:bg-brand-subtle transition-colors focus:outline-none"
+          >
+            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </div>
 
       <div
-        className={`fixed inset-0 bg-background/80 backdrop-blur-md transition-all duration-300 md:hidden flex flex-col justify-between px-6 pt-28 pb-10 z-40 ${
+        className={`fixed inset-x-0 top-20 bottom-0 bg-background/98 backdrop-blur-lg transition-all duration-300 md:hidden flex flex-col justify-between px-6 pt-8 pb-10 z-40 border-t border-outline/40 ${
           isOpen
             ? "opacity-100 pointer-events-auto translate-y-0"
             : "opacity-0 pointer-events-none -translate-y-4"

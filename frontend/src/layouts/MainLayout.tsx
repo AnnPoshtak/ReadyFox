@@ -4,12 +4,12 @@ import { Header } from "@/components/Header";
 
 export default function DashboardLayout() {
     return (
-        <div>
+        <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
             <Header />
-            <main className="">
+            <main className="flex-1">
                 <Outlet />
             </main>
-            <   Footer />
+            <Footer />
         </div>
     );
 }
