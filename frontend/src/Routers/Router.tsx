@@ -35,6 +35,8 @@ import Lesson from "@/pages/dashboard/lessons/Lesson/Lesson";
 import Quiz from "@/pages/dashboard/quizzes/Quiz/Quiz";
 import QuizResults from "@/pages/dashboard/quizzes/QuizResults/QuizResults";
 import { StatsOverview } from "@/pages/dashboard/StatsOverview/StatsOverview";
+import { TermsOfService } from "@/pages/docs/TermOfServices";
+import { PrivacyPolicy } from "@/pages/docs/PrivacyPolicy";
 
 export const Router = () => {
     return (
@@ -74,6 +76,8 @@ export const Router = () => {
                 </Route>
 
                 <Route path="*" element={<NotFound />} />
+                <Route path="/terms" element={<TermsOfService />} />
+                <Route path="/privacy" element={<PrivacyPolicy />} />
             </Routes>
         </BrowserRouter>
     );
