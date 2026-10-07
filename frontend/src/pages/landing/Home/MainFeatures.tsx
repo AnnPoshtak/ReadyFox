@@ -1,73 +1,87 @@
-import { BookOpen, Gamepad2, TrendingUp } from "lucide-react";
+import { Gamepad2, BookOpen, TrendingUp } from "lucide-react";
 
-export const MainFeatures = () => {
-    const mainFeatures = [
+export function MainFeatures() {
+    const features = [
         {
-            title: "Інтерактивні квізи",
             badge: "Грай та створюй",
-            icon: Gamepad2,
-            description: "Швидко приєднуйся до гри за кодом або знаходь тести у загальній бібліотеці. Створюй власні квізи на будь-яку тему для друзів чи самоперевірки.",
+            badgeIcon: Gamepad2,
+            title: "Інтерактивні квізи",
+            description:
+                "Швидко приєднуйся до гри за кодом або знаходь тести у загальній бібліотеці. Створюй власні квізи на будь-яку тему для друзів чи самоперевірки.",
+            image: "/quiz.png",
+            alt: "Лисичка грає в квіз",
         },
         {
-            title: "База знань та матеріалів",
-            badge: "Відкрита бібліотека",
-            icon: BookOpen,
-            description: "Єдиний відкритий каталог із презентаціями, конспектами та відеоуроками. Зручний пошук дозволяє швидко знайти потрібний матеріал на будь-яку тему.",
+            badge: "Навчання та теми",
+            badgeIcon: BookOpen,
+            title: "Уроки та навчальні матеріали",
+            description:
+                "Проходь навчальні теми, детально опрацьовуй прикріплені викладачем матеріали та вдосконалюй свої знання у власному темпі.",
+            image: "/lesson.png",
+            alt: "Лисичка навчається",
         },
         {
-            title: "Рейтинг та статистика",
             badge: "Твій акаунт",
-            icon: TrendingUp,
-            description: "Змагайся з іншими за кількістю пройдених квізів та точністю відповідей. З акаунтом результати квізів зберігаються, а також прогрес та рекорди.",
+            badgeIcon: TrendingUp,
+            title: "Рейтинг та статистика",
+            description:
+                "Змагайся з іншими за кількістю пройдених квізів та точністю відповідей. З акаунтом результати квізів зберігаються, а також прогрес та рекорди.",
+            image: "/progress.png",
+            alt: "Лисичка дивиться на прогрес",
         },
     ];
 
     return (
-        <div className="space-y-20 md:space-y-28">
-            {mainFeatures.map((item, index) => {
-                const IconComponent = item.icon;
-                const isEven = index % 2 === 0;
+        <section className="max-w-7xl mx-auto px-6 py-16 md:py-24 border-t border-outline/60 space-y-16 md:space-y-24">
+            <div className="flex flex-col items-center text-center space-y-3">
+                <div className="px-4 py-1.5 rounded-full bg-peach/80 text-foreground-secondary font-heading text-xs uppercase tracking-wider font-bold border border-outline/50">
+                    Як це працює
+                </div>
+                <h2 className="font-heading text-3xl md:text-5xl font-extrabold tracking-tight">
+                    Все для швидкого та цікавого розвитку
+                </h2>
+                <p className="text-foreground-secondary text-base md:text-lg max-w-2xl">
+                    Відкритий доступ до базових матеріалів та розширені можливості з власним акаунтом.
+                </p>
+            </div>
+            <div className="space-y-16 md:space-y-24">
+                {features.map((feature, index) => {
+                    const Icon = feature.badgeIcon;
+                    const isReversed = index % 2 !== 0;
 
-                return (
-                    <div
-                        key={index}
-                        className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"
-                    >
+                    return (
                         <div
-                            className={`lg:col-span-6 flex flex-col items-start space-y-5 ${isEven ? "lg:order-1" : "lg:order-2"
+                            key={index}
+                            className={`flex flex-col lg:flex-row items-center justify-between gap-10 md:gap-16 ${isReversed ? "lg:flex-row-reverse" : ""
                                 }`}
                         >
-                            <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 flex items-center justify-center bg-brand-subtle text-brand rounded-2xl">
-                                    <IconComponent className="w-6 h-6" />
+                            <div className="flex-1 space-y-4 text-left max-w-xl">
+                                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-peach/50 text-foreground-secondary font-heading text-xs font-bold border border-outline/40 uppercase tracking-wider">
+                                    <Icon className="w-3.5 h-3.5 text-brand" />
+                                    <span>{feature.badge}</span>
                                 </div>
-                                <span className="px-3.5 py-1 rounded-full bg-peach/60 text-brand font-heading text-xs font-bold uppercase tracking-wider">
-                                    {item.badge}
-                                </span>
+
+                                <h3 className="font-heading text-2xl md:text-4xl font-extrabold tracking-tight">
+                                    {feature.title}
+                                </h3>
+
+                                <p className="text-foreground-secondary text-base md:text-lg leading-relaxed">
+                                    {feature.description}
+                                </p>
                             </div>
-
-                            <h3 className="font-heading text-3xl sm:text-4xl font-extrabold text-foreground leading-tight">
-                                {item.title}
-                            </h3>
-
-                            <p className="text-foreground-secondary text-base md:text-lg leading-relaxed">
-                                {item.description}
-                            </p>
-                        </div>
-
-                        <div
-                            className={`lg:col-span-6 flex justify-center items-center ${isEven ? "lg:order-2" : "lg:order-1"
-                                }`}
-                        >
-                            <div className="w-full h-64 md:h-80 bg-surface border border-outline rounded-3xl shadow-sm flex items-center justify-center p-8">
-                                <div className="w-16 h-16 rounded-2xl bg-brand-subtle text-brand flex items-center justify-center">
-                                    <IconComponent className="w-8 h-8" />
+                            <div className="flex-1 w-full flex justify-center max-w-lg">
+                                <div className="p-3 bg-surface rounded-3xl border border-outline/60 shadow-sm inline-block">
+                                    <img
+                                        src={feature.image}
+                                        alt={feature.alt}
+                                        className="max-h-64 md:max-h-80 w-auto object-contain rounded-2xl"
+                                    />
                                 </div>
                             </div>
                         </div>
-                    </div>
-                );
-            })}
-        </div>
-    )
+                    );
+                })}
+            </div>
+        </section>
+    );
 }
