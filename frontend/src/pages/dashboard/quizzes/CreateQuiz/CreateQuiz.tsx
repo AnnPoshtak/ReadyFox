@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Trash2, Check, Clock, BookOpen, AlertCircle, ArrowRight } from "lucide-react";
+import { Plus, Trash2, Check, Clock, BookOpen, AlertCircle, ArrowRight, FileText } from "lucide-react";
 import CustomSelect from "@/components/CustomSelect";
 import { SUBJECT_OPTIONS, type Option } from "@/constants/subjects";
+import { TextImportModal } from "./components/QuizImportModal";
 
 interface LocalOption {
   id: number;
@@ -32,6 +33,7 @@ export default function CreateQuiz() {
   ]);
 
   const [error, setError] = useState<string | null>(null);
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
 
   const handleAddQuestion = () => {
     setQuestions([
@@ -96,6 +98,53 @@ export default function CreateQuiz() {
       isCorrect: idx === oIndex,
     }));
     setQuestions(updated);
+  };
+
+  const handleImportText = (rawText: string) => {
+    const lines = rawText.split("\n").map((line) => line.trim()).filter(Boolean);
+    const parsedQuestions: LocalQuestion[] = [];
+    let currentQuestion: LocalQuestion | null = null;
+
+    lines.forEach((line) => {
+      const isOption = /^[+*]?[a-zA-Bа-яА-Яа-щЬьЮюЯяЇїІіЄєҐґ0-9][\)\.]\s*/.test(line) || line.startsWith("+") || line.startsWith("*");
+
+      if (isOption && currentQuestion) {
+        let isCorrect = line.startsWith("+") || line.startsWith("*");
+        let cleanText = line.replace(/^[+*]\s*/, "");
+        cleanText = cleanText.replace(/^[a-zA-Bа-яА-Яа-щЬьЮюЯяЇїІіЄєҐґ0-9][\)\.]\s*/, "").trim();
+
+        currentQuestion.options.push({
+          id: currentQuestion.options.length + 1,
+          text: cleanText,
+          isCorrect,
+        });
+      } else {
+        if (currentQuestion) {
+          if (!currentQuestion.options.some((opt) => opt.isCorrect) && currentQuestion.options.length > 0) {
+            currentQuestion.options[0].isCorrect = true;
+          }
+          parsedQuestions.push(currentQuestion);
+        }
+
+        const cleanQuestionText = line.replace(/^\d+[\)\.]\s*/, "").trim();
+        currentQuestion = {
+          questionText: cleanQuestionText,
+          options: [],
+        };
+      }
+    });
+
+    if (currentQuestion) {
+      if (!(currentQuestion as LocalQuestion).options.some((opt) => opt.isCorrect) && (currentQuestion as LocalQuestion).options.length > 0) {
+        (currentQuestion as LocalQuestion).options[0].isCorrect = true;
+      }
+      parsedQuestions.push(currentQuestion);
+    }
+
+    if (parsedQuestions.length > 0) {
+      setQuestions(parsedQuestions);
+      setError(null);
+    }
   };
 
   const handleNext = (e: React.FormEvent) => {
@@ -213,7 +262,17 @@ export default function CreateQuiz() {
         </div>
 
         <div className="flex flex-col gap-4">
-          <h2 className="text-xl font-bold text-foreground">Запитання</h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-bold text-foreground">Запитання</h2>
+            <button
+              type="button"
+              onClick={() => setIsImportModalOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-brand bg-brand-soft border border-outline hover:border-brand rounded-xl transition-all cursor-pointer"
+            >
+              <FileText className="w-4 h-4" />
+              Вставити текстом
+            </button>
+          </div>
 
           {questions.map((question, qIndex) => (
             <div
@@ -318,6 +377,12 @@ export default function CreateQuiz() {
           Далі <ArrowRight className="w-4 h-4" />
         </button>
       </form>
+
+      <TextImportModal
+        isOpen={isImportModalOpen}
+        onClose={() => setIsImportModalOpen(false)}
+        onImport={handleImportText}
+      />
     </div>
   );
 }
