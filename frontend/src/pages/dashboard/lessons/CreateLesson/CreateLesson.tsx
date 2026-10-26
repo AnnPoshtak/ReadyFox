@@ -28,8 +28,6 @@ export default function CreateLesson() {
   const [selectedSubject, setSelectedSubject] = useState<Option | null>(null);
   const [goal, setGoal] = useState("");
   const [content, setContent] = useState("");
-  const [mainMediaType, setMainMediaType] = useState<"NONE" | "PRESENTATION" | "VIDEO">("NONE");
-  const [mainMediaUrl, setMainMediaUrl] = useState("");
   const [availableQuizzes, setAvailableQuizzes] = useState<Quiz[]>([]);
   const [quizSearch, setQuizSearch] = useState("");
   const [selectedQuizId, setSelectedQuizId] = useState<number | null>(null);
@@ -100,11 +98,6 @@ export default function CreateLesson() {
       return;
     }
 
-    if (mainMediaType !== "NONE" && !mainMediaUrl.trim()) {
-      setError("Додайте посилання на основний медіа-матеріал, якщо обрано тип медіа.");
-      return;
-    }
-
     const filteredResources = additionalResources
       .filter((resource) => resource.title.trim() || resource.url.trim())
       .map((resource) => ({
@@ -117,8 +110,6 @@ export default function CreateLesson() {
       category: selectedSubject.label,
       goal: goal.trim(),
       content: content.trim(),
-      mainMediaType,
-      mainMediaUrl: mainMediaType === "NONE" ? undefined : mainMediaUrl.trim(),
       additionalResources: filteredResources,
       quizId: selectedQuizId ?? undefined,
     };
@@ -244,37 +235,6 @@ export default function CreateLesson() {
                 Обрано: {availableQuizzes.find((quiz) => quiz.id === selectedQuizId)?.title}
               </p>
             )}
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-bold text-foreground-secondary flex items-center gap-1.5">
-                <Clock3 className="w-4 h-4 text-brand" />
-                Тип основного медіа
-              </label>
-              <select
-                value={mainMediaType}
-                onChange={(e) => setMainMediaType(e.target.value as "NONE" | "PRESENTATION" | "VIDEO")}
-                className="bg-cream py-3 px-4 rounded-xl w-full outline-none border border-outline focus:border-brand transition-colors text-xs font-bold text-foreground h-[42px]"
-              >
-                <option value="NONE">Без медіа</option>
-                <option value="PRESENTATION">Презентація</option>
-                <option value="VIDEO">Відео</option>
-              </select>
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-bold text-foreground-secondary">
-                Посилання на медіа
-              </label>
-              <input
-                type="url"
-                value={mainMediaUrl}
-                onChange={(e) => setMainMediaUrl(e.target.value)}
-                placeholder="https://..."
-                className="bg-cream py-3 px-4 rounded-xl w-full outline-none border border-outline focus:border-brand transition-colors text-xs font-bold text-foreground placeholder:text-foreground-muted placeholder:font-normal h-[42px]"
-              />
-            </div>
           </div>
 
           <div className="flex flex-col gap-3">

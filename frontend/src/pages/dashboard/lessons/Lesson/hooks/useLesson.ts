@@ -2,12 +2,27 @@ import { lessonsApi } from "@/api/services/lessons";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+export interface AdditionalResource {
+    title: string;
+    url: string;
+}
+
+export interface Author {
+    id: number;
+    email: string;
+    nameAndSurname: string;
+}
+
 export default function useLesson() {
     const { id } = useParams<{ id: string }>();
+    
     const [title, setTitle] = useState("");
     const [goal, setGoal] = useState("");
     const [content, setContent] = useState("");
     const [quizId, setQuizId] = useState<number | null>(null);
+    
+    const [additionalResources, setAdditionalResources] = useState<AdditionalResource[]>([]);
+    const [author, setAuthor] = useState<Author | null>(null);
 
     const [isAgreed, setIsAgreed] = useState(false);
     const [isCompleted, setIsCompleted] = useState(false);
@@ -22,10 +37,14 @@ export default function useLesson() {
         const fetchLessonContent = async () => {
             try {
                 const data = await lessonsApi.findOne(+id);
+                
                 setTitle(data.title || "");
                 setGoal(data.goal || "");
                 setContent(data.content || "");
-                setQuizId(data.quiz.id || null);
+                setQuizId(data.quiz?.id ?? null);
+                
+                setAdditionalResources(data.additionalResources || []);
+                setAuthor(data.author || null);
             } catch (error) {
                 console.error("Помилка завантаження уроку:", error);
             }
@@ -33,7 +52,6 @@ export default function useLesson() {
 
         fetchLessonContent();
     }, [id]);
-
 
     const handleCompleteLesson = async () => {
         if (!id || !isAgreed || isSubmitting || isCompleted) return;
@@ -60,7 +78,9 @@ export default function useLesson() {
 
     const handleAcceptQuiz = () => {
         setOpenQuizModal(false);
-        navigate(`/dashboard/quizzes/${quizId}`);
+        if (quizId) {
+            navigate(`/dashboard/quizzes/${quizId}`);
+        }
     };
 
     const handleDeclineQuiz = () => {
@@ -68,19 +88,21 @@ export default function useLesson() {
         navigate(`/dashboard`);
     };
 
-    return{
+    return {
         title,
         goal,
         content,
         quizId,
-        setIsAgreed,
-        openQuizModal,
-        setOpenQuizModal,
-        handleCompleteLesson,
+        additionalResources,
+        author,
         isAgreed,
         isCompleted,
         isSubmitting,
+        openQuizModal,
+        setIsAgreed,
+        setOpenQuizModal,
+        handleCompleteLesson,
         handleAcceptQuiz,
-        handleDeclineQuiz
-    }
+        handleDeclineQuiz,
+    };
 }
