@@ -3,6 +3,7 @@ import { config } from 'dotenv';
 import * as path from 'path';
 
 config({ path: path.resolve(process.cwd(), '../.env') });
+
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
   host: process.env.DB_HOST,
@@ -10,9 +11,10 @@ export const dataSourceOptions: DataSourceOptions = {
   username: process.env.DB_USERNAME,
   password: String(process.env.DB_PASSWORD ?? ''),
   database: process.env.DB_NAME,
-  entities: ['dist/**/*.entity.js'],
-  migrations: ['dist/migrations/*.js'],
-  synchronize: true,
+  entities: ['src/**/*.entity.ts', 'dist/**/*.entity.js'],
+  migrations: ['src/migrations/*.ts', 'dist/migrations/*.js'],
+  synchronize: false,
+  ssl: process.env.DB_SSL === 'false' ? false : { rejectUnauthorized: false },
 };
 
 export const AppDataSource = new DataSource(dataSourceOptions);
