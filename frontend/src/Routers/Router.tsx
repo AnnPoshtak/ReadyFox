@@ -37,6 +37,7 @@ import QuizResults from "@/pages/dashboard/quizzes/QuizResults/QuizResults";
 import { StatsOverview } from "@/pages/dashboard/StatsOverview/StatsOverview";
 import { TermsOfService } from "@/pages/docs/TermOfServices";
 import { PrivacyPolicy } from "@/pages/docs/PrivacyPolicy";
+import WillBeSoon from "@/pages/WillBeSoon/WillBeSoon";
 
 export const Router = () => {
     return (
@@ -78,6 +79,7 @@ export const Router = () => {
                 <Route path="*" element={<NotFound />} />
                 <Route path="/terms" element={<TermsOfService />} />
                 <Route path="/privacy" element={<PrivacyPolicy />} />
+                <Route path="/will-be-soon" element={<WillBeSoon />} />
             </Routes>
         </BrowserRouter>
     );

@@ -28,7 +28,7 @@ export const HeroSection = () => {
                             <span>Почати навчання</span>
                             <ArrowRight className="w-5 h-5" />
                         </button>
-                        <button className="px-6 py-4 rounded-2xl bg-brand-soft hover:bg-peach active:scale-95 text-foreground font-heading font-semibold flex items-center justify-center gap-2.5 transition-all border border-outline cursor-pointer text-base">
+                        <button className="px-6 py-4 rounded-2xl bg-brand-soft hover:bg-peach active:scale-95 text-foreground font-heading font-semibold flex items-center justify-center gap-2.5 transition-all border border-outline cursor-pointer text-base" onClick={() => navigate("/will-be-soon")}>
                             <KeyRound className="w-5 h-5 text-brand" />
                             <span>Увійти за кодом</span>
                         </button>

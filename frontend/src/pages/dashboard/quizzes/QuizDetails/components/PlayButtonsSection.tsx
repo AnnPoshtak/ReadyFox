@@ -41,7 +41,7 @@ export const PlayButtonsSelection = () => {
                 </div>
 
                 <button
-                    onClick={() => console.log("Запуск для групи")}
+                    onClick={() => navigate("/will-be-soon")}
                     className="w-full py-3.5 px-6 bg-[var(--color-brand-soft)] hover:bg-[var(--color-brand)] text-[var(--color-brand)] hover:text-white font-bold rounded-2xl transition-colors flex items-center justify-center gap-2 cursor-pointer"
                 >
                     <Users className="w-5 h-5" /> Командна гра
