@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   HelpCircle,
@@ -7,8 +6,6 @@ import {
   Trophy,
   LogOut,
   ChevronLeft,
-  Menu,
-  X,
 } from "lucide-react";
 import { authApi } from "@/api/services/auth";
 import { ProfileButton } from "./ProfileButton";
@@ -20,18 +17,12 @@ interface SidebarProps {
 
 export const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-  useEffect(() => {
-    setIsMobileOpen(false);
-  }, [location.pathname]);
 
   const navItems = [
     { to: "/dashboard", label: "Головна", icon: LayoutDashboard, end: true },
-    { to: "/dashboard/quizzes", label: "Усі квізи", icon: HelpCircle },
-    { to: "/dashboard/lessons", label: "Усі уроки", icon: BookOpen },
-    { to: "/dashboard/results", label: "Дошка результатів", icon: Trophy },
+    { to: "/dashboard/quizzes", label: "Квізи", icon: HelpCircle },
+    { to: "/dashboard/lessons", label: "Уроки", icon: BookOpen },
+    { to: "/dashboard/results", label: "Рейтинг", icon: Trophy },
   ];
 
   const handleLogout = async () => {
@@ -41,55 +32,74 @@ export const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
 
   return (
     <>
-      <button
-        onClick={() => setIsMobileOpen(true)}
-        aria-label="Open menu"
-        className="md:hidden fixed top-3 left-3 z-30 p-2 rounded-xl bg-background/90 border border-outline shadow-md text-foreground hover:bg-accent transition-all cursor-pointer"
-      >
-        <Menu className="w-5 h-5" />
-      </button>
+      {/* ========================================================= */}
+      {/* 1. Мобільна адаптація: Нижня панель навігації (Bottom Nav) */}
+      {/* ========================================================= */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-t border-outline px-2 py-1.5 flex items-center justify-around shadow-lg safe-area-bottom">
+        {navItems.map(({ to, label, icon: Icon, end }) => (
+          <NavLink
+            key={to}
+            to={to}
+            end={end}
+            className={({ isActive }) =>
+              `flex flex-col items-center justify-center gap-1 px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
+                isActive
+                  ? "text-brand font-semibold scale-105"
+                  : "text-muted-foreground hover:text-foreground"
+              }`
+            }
+          >
+            <Icon className="w-5 h-5" />
+            <span className="text-[10px] leading-none">{label}</span>
+          </NavLink>
+        ))}
+      </nav>
 
-      {isMobileOpen && (
-        <div
-          onClick={() => setIsMobileOpen(false)}
-          className="md:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-xs transition-opacity"
-        />
-      )}
-
+      {/* ========================================================= */}
+      {/* 2. Десктопний Сайдбар (Відображається лише від md: екранів)*/}
+      {/* ========================================================= */}
       <aside
-        className={`fixed top-0 left-0 z-50 flex flex-col h-screen bg-background/95 backdrop-blur-md border-r border-outline shadow-sm transition-all duration-300 ease-in-out
-          ${isMobileOpen ? "translate-x-0 w-64 p-5" : "-translate-x-full"} 
-          md:translate-x-0 ${isCollapsed ? "md:w-20 p-3" : "md:w-64 p-5"}`}
+        className={`hidden md:flex fixed top-0 left-0 z-40 flex-col h-screen h-[100dvh] bg-background/95 backdrop-blur-md border-r border-outline shadow-sm transition-all duration-300 ease-in-out ${
+          isCollapsed ? "w-20 p-3" : "w-64 p-5"
+        }`}
       >
+        {/* Перемикач (Collapse Button) */}
         <button
           onClick={onToggle}
-          className="hidden md:flex absolute -right-3.5 top-7 z-10 items-center justify-center w-7 h-7 bg-background border border-outline rounded-full text-muted-foreground hover:text-foreground shadow-sm transition-transform active:scale-95 cursor-pointer"
+          className="absolute -right-3.5 top-7 z-10 flex items-center justify-center w-7 h-7 bg-background border border-outline rounded-full text-muted-foreground hover:text-foreground shadow-sm transition-transform active:scale-95 cursor-pointer"
           title={isCollapsed ? "Розгорнути" : "Згорнути"}
         >
-          <ChevronLeft className={`w-4 h-4 transition-transform duration-300 ${isCollapsed ? "rotate-180" : ""}`} />
+          <ChevronLeft
+            className={`w-4 h-4 transition-transform duration-300 ${
+              isCollapsed ? "rotate-180" : ""
+            }`}
+          />
         </button>
 
-        <div className={`flex items-center mb-8 ${isCollapsed ? "justify-center" : "justify-between"}`}>
+        {/* Логотип */}
+        <div
+          className={`flex items-center mb-8 ${
+            isCollapsed ? "justify-center" : "justify-between"
+          }`}
+        >
           <NavLink
             to="/dashboard"
             className="flex items-center gap-3 select-none group transition-transform active:scale-95"
           >
-            <img src="/logo.png" alt="ReadyFox Logo" className="h-8 w-auto object-contain shrink-0" />
+            <img
+              src="/logo.png"
+              alt="ReadyFox Logo"
+              className="h-8 w-auto object-contain shrink-0"
+            />
             {!isCollapsed && (
               <span className="font-heading text-2xl font-bold text-foreground tracking-tight whitespace-nowrap">
                 Ready<span className="text-brand">Fox</span>
               </span>
             )}
           </NavLink>
-
-          <button
-            onClick={() => setIsMobileOpen(false)}
-            className="md:hidden p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent cursor-pointer"
-          >
-            <X className="w-5 h-5" />
-          </button>
         </div>
 
+        {/* Навігація десктоп */}
         <nav className="flex flex-col gap-1.5 flex-1 overflow-y-auto">
           {navItems.map(({ to, label, icon: Icon, end }) => (
             <NavLink
@@ -111,7 +121,9 @@ export const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
                 <>
                   <Icon
                     className={`w-5 h-5 shrink-0 transition-transform group-hover:scale-110 ${
-                      isActive ? "text-white" : "text-muted-foreground group-hover:text-brand"
+                      isActive
+                        ? "text-white"
+                        : "text-muted-foreground group-hover:text-brand"
                     }`}
                   />
                   {!isCollapsed && <span className="truncate">{label}</span>}
@@ -121,6 +133,7 @@ export const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
           ))}
         </nav>
 
+        {/* Футер сайдбару */}
         <div className="pt-3 border-t border-outline mt-auto flex flex-col gap-1">
           <ProfileButton />
           <button

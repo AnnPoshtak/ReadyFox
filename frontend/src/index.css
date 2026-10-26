@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
 body {
   background-color: var(--color-background);
   color: var(--color-foreground);
@@ -7,46 +16,37 @@ body {
 }
 
 @theme {
-  /* Fonts */
   --font-sans: "Fredoka", system-ui, sans-serif;
   --font-heading: "Fredoka", system-ui, sans-serif;
 
-  /* Primary Brand */
   --color-brand: #FF6B00;
   --color-brand-hover: #F05A00;
   --color-brand-active: #D94F00;
 
-  /* Brand Backgrounds */
   --color-brand-soft: #FFF0DE;
   --color-brand-subtle: #FFF8F0;
 
-  /* Backgrounds */
   --color-background: #FFFDF9;
   --color-background-secondary: #FFF8F1;
   --color-surface: #FFFFFF;
   --color-surface-hover: #FFFAF4;
 
-  /* Text */
   --color-foreground: #3A1F12;
   --color-foreground-secondary: #5D4433;
   --color-foreground-muted: #9E8D7C;
   --color-foreground-inverse: #FFFFFF;
 
-  /* Borders */
   --color-outline: #F6E6D7;
   --color-outline-hover: #EECBA8;
 
-  /* Semantic */
   --color-success: #4CAF50;
   --color-warning: #FFC83D;
   --color-danger: #EF5350;
   --color-info: #42A5F5;
 
-  /* Decorative */
   --color-highlight: #FFD54A;
   --color-shadow: rgb(255 107 0 / 0.15);
 
-  /* Extra colors */
   --color-cream: #FFF4E7;
   --color-peach: #FFE4C4;
   --color-orange-light: #FF9B42;
@@ -56,35 +56,24 @@ body {
   --color-icon: #F8B24E;
 }
 
-/*
 @layer base {
-  .dark {
-    --color-brand-soft: #2A1A0E;
-    --color-brand-subtle: #23150B;
+  img, video, canvas, svg {
+    max-width: 100%;
+    height: auto;
+  }
 
-    --color-background: #121212;
-    --color-background-secondary: #1A1A1A;
-    --color-surface: #1E1E1E;
-    --color-surface-hover: #262626;
+  h1, h2, h3, h4, h5, h6, p, span, a {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
 
-    --color-foreground: #F5EBE6;
-    --color-foreground-secondary: #D1C2B8;
-    --color-foreground-muted: #8C7B70;
-
-    --color-outline: #2D2621;
-    --color-outline-hover: #42362E;
-
-    --color-shadow: rgb(0 0 0 / 0.5);
-
-    --color-cream: #241B14;
-    --color-peach: #382417;
-    --color-brown: #EAD0C3;
-    --color-brown-light: #CBB4A7;
+  *, ::before, ::after {
+    min-width: 0;
   }
 }
-*/
+
 * {
-  scrollbar-width: fat;
+  scrollbar-width: thin;
   scrollbar-color: var(--color-brand) var(--color-brand-soft);
 }
 
