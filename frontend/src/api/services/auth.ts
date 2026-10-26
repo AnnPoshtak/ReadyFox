@@ -5,6 +5,7 @@ import {
   type AuthResult,
   type UserProfile,
   type LogoutResponse,
+  type Login,
 } from '../types';
 
 export const authApi = {
@@ -13,7 +14,7 @@ export const authApi = {
     return response.data;
   },
 
-  login: async (dto: CreateAuthDto): Promise<AuthResult> => {
+  login: async (dto: Login): Promise<AuthResult> => {
     const response = await api.post<AuthResult>('/auth/login', dto);
     
     if (response.data.accessToken && response.data.refreshToken) {

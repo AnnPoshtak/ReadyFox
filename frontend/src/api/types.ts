@@ -4,6 +4,11 @@ export interface CreateAuthDto {
   nameAndSurname?: string;
 }
 
+export interface Login {
+  email: string;
+  password: string;
+}
+
 export interface RegisterResponse {
   message: string;
   id: number;
@@ -32,6 +37,12 @@ export interface LogoutResponse {
   message: string;
 }
 
+export interface AuthFormData {
+    firstName?: string;
+    lastName?: string;
+    email: string;
+    password: string;
+}
 // Quizzes
 export interface QuestionOption {
   id: number;

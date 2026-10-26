@@ -4,13 +4,11 @@ import {
   IsNotEmpty,
   IsArray,
   ValidateNested,
-  IsEnum,
   IsOptional,
   IsUrl,
   IsNumber,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { MainMediaType } from '../entities/lesson.entity';
 
 export class AdditionalResourceDto {
   @ApiProperty({ example: 'Енциклопедія історії України' })
@@ -44,16 +42,6 @@ export class CreateLessonDto {
   @IsString()
   @IsNotEmpty()
   content!: string;
-
-  @ApiPropertyOptional({ enum: MainMediaType, example: MainMediaType.PRESENTATION })
-  @IsEnum(MainMediaType)
-  @IsOptional()
-  mainMediaType?: MainMediaType;
-
-  @ApiPropertyOptional({ example: 'https://docs.google.com/presentation/d/112233/embed' })
-  @IsUrl()
-  @IsOptional()
-  mainMediaUrl?: string;
 
   @ApiPropertyOptional({ type: [AdditionalResourceDto] })
   @IsArray()

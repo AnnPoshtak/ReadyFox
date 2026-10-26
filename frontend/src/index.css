@@ -56,6 +56,7 @@ body {
   --color-icon: #F8B24E;
 }
 
+/*
 @layer base {
   .dark {
     --color-brand-soft: #2A1A0E;
@@ -81,7 +82,7 @@ body {
     --color-brown-light: #CBB4A7;
   }
 }
-
+*/
 * {
   scrollbar-width: fat;
   scrollbar-color: var(--color-brand) var(--color-brand-soft);

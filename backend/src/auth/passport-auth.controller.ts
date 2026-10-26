@@ -6,6 +6,7 @@ import { GoogleAuthGuard } from "./guards/google-auth.guard";
 import { CreateAuthDto } from "./dto/create-auth.dto";
 import { Public } from "./decorators/public.decorator";
 import { PassportRefreshGuard } from "./guards/passport-refresh.guard";
+import { LoginAuthDto } from "./dto/login-auth.dto";
 
 @Controller('auth')
 export class PassportAuthController {
@@ -20,7 +21,7 @@ export class PassportAuthController {
     @Public()
     @Post('login')
     @UseGuards(PassportLocalGuard)
-    login(@Request() request: any, @Body() createAuth: CreateAuthDto) {
+    login(@Request() request: any, @Body() loginDto: LoginAuthDto) {
         return this.authService.signIn(request.user);
     }
 

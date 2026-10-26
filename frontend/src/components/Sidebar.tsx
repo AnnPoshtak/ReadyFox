@@ -9,10 +9,9 @@ import {
   ChevronLeft,
   Menu,
   X,
-  Sun,
-  Moon,
 } from "lucide-react";
 import { authApi } from "@/api/services/auth";
+import { ProfileButton } from "./ProfileButton";
 
 interface SidebarProps {
   isCollapsed: boolean;
@@ -24,13 +23,6 @@ export const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
   const location = useLocation();
 
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    const isDarkMode = document.documentElement.classList.contains("dark");
-    setIsDark(isDarkMode);
-  }, []);
-
   useEffect(() => {
     setIsMobileOpen(false);
   }, [location.pathname]);
@@ -45,19 +37,6 @@ export const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
   const handleLogout = async () => {
     await authApi.logout();
     navigate("/");
-  };
-
-  const toggleTheme = () => {
-    const newDarkState = !isDark;
-    setIsDark(newDarkState);
-
-    if (newDarkState) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
   };
 
   return (
@@ -143,25 +122,7 @@ export const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
         </nav>
 
         <div className="pt-3 border-t border-outline mt-auto flex flex-col gap-1">
-          <button
-            onClick={toggleTheme}
-            title={isCollapsed ? (isDark ? "Світла тема" : "Темна тема") : undefined}
-            className={`flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-brand-subtle/60 transition-all duration-200 w-full cursor-pointer group ${
-              isCollapsed ? "justify-center" : ""
-            }`}
-          >
-            {isDark ? (
-              <Sun className="w-5 h-5 shrink-0 text-warning transition-transform group-hover:scale-110" />
-            ) : (
-              <Moon className="w-5 h-5 shrink-0 transition-transform group-hover:scale-110 group-hover:text-brand" />
-            )}
-            {!isCollapsed && (
-              <span className="truncate">
-                {isDark ? "Світла тема" : "Темна тема"}
-              </span>
-            )}
-          </button>
-
+          <ProfileButton />
           <button
             onClick={handleLogout}
             title={isCollapsed ? "Вийти з акаунту" : undefined}
