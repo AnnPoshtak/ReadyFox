@@ -20,8 +20,8 @@ export default function WillBeSoon() {
                     autoplay
                 />
             </div>
-            <div className="relative z-10 max-w-lg space-y-3">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-foreground tracking-tight leading-tight">
+            <div className="relative z-10 space-y-3">
+                <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-foreground tracking-tight leading-tight">
                     Здається ви потрапили на сторінку, яка на етапі створення
                 </h1>
                 <p className="text-base sm:text-lg text-foreground-secondary leading-relaxed">
