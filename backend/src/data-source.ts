@@ -13,6 +13,7 @@ export const dataSourceOptions: DataSourceOptions = {
   username: process.env.DB_USERNAME,
   password: String(process.env.DB_PASSWORD ?? ''),
   database: process.env.DB_NAME,
+  // Для prod відносний шлях береться від dist/data-source.js
   entities: [isProduction ? 'dist/**/*.entity.js' : 'src/**/*.entity.ts'],
   migrations: [isProduction ? 'dist/migrations/*.js' : 'src/migrations/*.ts'],
   synchronize: false,
