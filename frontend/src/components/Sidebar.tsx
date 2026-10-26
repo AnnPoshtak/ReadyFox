@@ -39,9 +39,10 @@ export const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
             to={to}
             end={end}
             className={({ isActive }) =>
-              `flex flex-col items-center justify-center gap-1 px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${isActive
-                ? "text-brand font-semibold scale-105"
-                : "text-muted-foreground hover:text-foreground"
+              `flex flex-col items-center justify-center gap-1 px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
+                isActive
+                  ? "text-brand font-semibold scale-105"
+                  : "text-muted-foreground hover:text-foreground"
               }`
             }
           >
@@ -49,11 +50,21 @@ export const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
             <span className="text-[10px] leading-none">{label}</span>
           </NavLink>
         ))}
+
+        <button
+          onClick={handleLogout}
+          type="button"
+          className="flex flex-col items-center justify-center gap-1 px-3 py-1.5 rounded-xl text-xs font-medium text-red-500 hover:text-red-600 transition-all active:scale-95 cursor-pointer"
+        >
+          <LogOut className="w-5 h-5" />
+          <span className="text-[10px] leading-none">Вийти</span>
+        </button>
       </nav>
 
       <aside
-        className={`hidden md:flex fixed top-0 left-0 z-40 flex-col h-screen h-[100dvh] bg-background/95 backdrop-blur-md border-r border-outline shadow-sm transition-all duration-300 ease-in-out ${isCollapsed ? "w-20 p-3" : "w-64 p-5"
-          }`}
+        className={`hidden md:flex fixed top-0 left-0 z-40 flex-col h-screen h-[100dvh] bg-background/95 backdrop-blur-md border-r border-outline shadow-sm transition-all duration-300 ease-in-out ${
+          isCollapsed ? "w-20 p-3" : "w-64 p-5"
+        }`}
       >
         <button
           onClick={onToggle}
@@ -61,14 +72,16 @@ export const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
           title={isCollapsed ? "Розгорнути" : "Згорнути"}
         >
           <ChevronLeft
-            className={`w-4 h-4 transition-transform duration-300 ${isCollapsed ? "rotate-180" : ""
-              }`}
+            className={`w-4 h-4 transition-transform duration-300 ${
+              isCollapsed ? "rotate-180" : ""
+            }`}
           />
         </button>
 
         <div
-          className={`flex items-center mb-8 ${isCollapsed ? "justify-center" : "justify-between"
-            }`}
+          className={`flex items-center mb-8 ${
+            isCollapsed ? "justify-center" : "justify-between"
+          }`}
         >
           <NavLink
             to="/dashboard"
@@ -95,20 +108,23 @@ export const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
               end={end}
               title={isCollapsed ? label : undefined}
               className={({ isActive }) =>
-                `flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group ${isCollapsed ? "justify-center" : ""
-                } ${isActive
-                  ? "bg-brand text-white shadow-md shadow-brand/20 font-semibold"
-                  : "text-muted-foreground hover:text-foreground hover:bg-brand-subtle/60"
+                `flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group ${
+                  isCollapsed ? "justify-center" : ""
+                } ${
+                  isActive
+                    ? "bg-brand text-white shadow-md shadow-brand/20 font-semibold"
+                    : "text-muted-foreground hover:text-foreground hover:bg-brand-subtle/60"
                 }`
               }
             >
               {({ isActive }) => (
                 <>
                   <Icon
-                    className={`w-5 h-5 shrink-0 transition-transform group-hover:scale-110 ${isActive
+                    className={`w-5 h-5 shrink-0 transition-transform group-hover:scale-110 ${
+                      isActive
                         ? "text-white"
                         : "text-muted-foreground group-hover:text-brand"
-                      }`}
+                    }`}
                   />
                   {!isCollapsed && <span className="truncate">{label}</span>}
                 </>
@@ -122,8 +138,9 @@ export const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
           <button
             onClick={handleLogout}
             title={isCollapsed ? "Вийти з акаунту" : undefined}
-            className={`flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium text-red-500 hover:bg-red-500/10 active:bg-red-500/20 transition-all duration-200 w-full cursor-pointer group ${isCollapsed ? "justify-center" : ""
-              }`}
+            className={`flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium text-red-500 hover:bg-red-500/10 active:bg-red-500/20 transition-all duration-200 w-full cursor-pointer group ${
+              isCollapsed ? "justify-center" : ""
+            }`}
           >
             <LogOut className="w-5 h-5 shrink-0 transition-transform group-hover:-translate-x-0.5" />
             {!isCollapsed && <span className="truncate">Вийти з акаунту</span>}
