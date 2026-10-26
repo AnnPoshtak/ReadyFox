@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Menu, X } from "lucide-react"; 
+import { Menu, X } from "lucide-react";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
   const closeMenu = () => setIsOpen(false);
-  
+
   const linkClass = ({ isActive }: { isActive: boolean }) =>
-    `transition-colors hover:text-brand ${
-      isActive ? "text-brand font-semibold" : "text-foreground"
+    `transition-colors hover:text-brand ${isActive ? "text-brand font-semibold" : "text-foreground"
     }`;
 
   return (
@@ -36,7 +35,7 @@ export const Header = () => {
         </nav>
 
         <div className="flex items-center gap-3 z-50">
-          <Link 
+          <Link
             to="/auth"
             onClick={closeMenu}
             className="hidden sm:inline-block px-5 py-2.5 rounded-xl border border-outline bg-brand-subtle hover:bg-brand-soft text-brand font-heading font-semibold text-sm transition-all text-center"
@@ -57,11 +56,10 @@ export const Header = () => {
       </div>
 
       <div
-        className={`fixed inset-x-0 top-20 bottom-0 bg-background/98 backdrop-blur-lg transition-all duration-300 md:hidden flex flex-col justify-between px-6 pt-8 pb-10 z-40 border-t border-outline/40 ${
-          isOpen
-            ? "opacity-100 pointer-events-auto translate-y-0"
-            : "opacity-0 pointer-events-none -translate-y-4"
-        }`}
+        className={`fixed inset-x-0 top-20 h-[calc(100vh-5rem)] bg-background transition-all duration-300 md:hidden flex flex-col justify-between px-6 pt-8 pb-10 z-40 overflow-y-auto ${isOpen
+          ? "opacity-100 pointer-events-auto translate-y-0"
+          : "opacity-0 pointer-events-none -translate-y-4"
+          }`}
       >
         <nav className="flex flex-col gap-6 font-sans text-xl font-medium">
           <NavLink to="/how-it-works" onClick={closeMenu} className={linkClass}>
@@ -76,7 +74,7 @@ export const Header = () => {
         </nav>
 
         <div className="pt-6 border-t border-outline flex flex-col gap-3">
-          <Link 
+          <Link
             to="/auth"
             onClick={closeMenu}
             className="w-full px-5 py-3 rounded-xl border border-outline bg-brand-subtle hover:bg-brand-soft text-brand font-heading font-semibold text-center transition-all"
