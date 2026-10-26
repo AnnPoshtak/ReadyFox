@@ -10,11 +10,6 @@ import {
 import { User } from 'src/users/entities/user.entity';
 import { Quiz } from '@/quizzes/entities/quiz.entity';
 
-export enum MainMediaType {
-  PRESENTATION = 'PRESENTATION',
-  VIDEO = 'VIDEO',
-  NONE = 'NONE',
-}
 
 export interface AdditionalResource {
   title: string;
@@ -37,17 +32,6 @@ export class Lesson {
 
   @Column({ type: 'text' })
   content: string;
-
-  @Column({
-    name: 'main_media_type',
-    type: 'enum',
-    enum: MainMediaType,
-    default: MainMediaType.NONE,
-  })
-  mainMediaType: MainMediaType;
-
-  @Column({ name: 'main_media_url', nullable: true })
-  mainMediaUrl: string;
 
   @Column({ name: 'additional_resources', type: 'json', nullable: true })
   additionalResources: AdditionalResource[];

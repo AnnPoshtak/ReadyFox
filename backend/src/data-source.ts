@@ -4,7 +4,8 @@ import * as path from 'path';
 
 config({ path: path.resolve(process.cwd(), '../.env') });
 
-const isProduction = process.env.NODE_ENV === 'production';
+// Перевіряємо, чи запустився код із папку dist (продакшн збірка)
+const isDist = __dirname.includes('dist');
 
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
@@ -13,9 +14,9 @@ export const dataSourceOptions: DataSourceOptions = {
   username: process.env.DB_USERNAME,
   password: String(process.env.DB_PASSWORD ?? ''),
   database: process.env.DB_NAME,
-  // Для prod відносний шлях береться від dist/data-source.js
-  entities: [isProduction ? 'dist/**/*.entity.js' : 'src/**/*.entity.ts'],
-  migrations: [isProduction ? 'dist/migrations/*.js' : 'src/migrations/*.ts'],
+  // Якщо файл у dist — використовуємо .js, якщо у src — використовуємо .ts
+  entities: [isDist ? path.join(__dirname, '/**/*.entity.js') : 'src/**/*.entity.ts'],
+  migrations: [isDist ? path.join(__dirname, '/migrations/*.js') : 'src/migrations/*.ts'],
   synchronize: false,
   ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
 };
