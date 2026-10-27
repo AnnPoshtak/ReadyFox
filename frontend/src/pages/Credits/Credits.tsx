@@ -1,5 +1,5 @@
 import { Player } from "@lottiefiles/react-lottie-player";
-import stickerAnimation from "/stickers/026.json?url";
+import stickerAnimation from "/stickers/016.json?url";
 
 const testers = [
     { name: "@berizka" },
@@ -40,7 +40,14 @@ export default function CreditsPage() {
                                 </p>
                             </div>
 
-                            <Player src={stickerAnimation} loop autoplay className="w-full h-auto" />
+                            <div className="flex justify-center items-center w-full min-h-[280px]">
+                                <Player 
+                                    src={stickerAnimation} 
+                                    loop 
+                                    autoplay 
+                                    style={{ height: '280px', width: '280px' }} 
+                                />
+                            </div>
                         </div>
                     </section>
 
@@ -61,7 +68,7 @@ export default function CreditsPage() {
                             {testers.map((tester) => (
                                 <article
                                     key={tester.name}
-                                    className="group flex items-center justify-start gap-3 rounded-[24px] border border-outline bg-surface p-4 shadow-[0_8px_20px_rgba(74,40,22,0.03)] transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/40"
+                                    className="flex items-center justify-start gap-3 rounded-[24px] border border-outline bg-surface p-4 shadow-[0_8px_20px_rgba(74,40,22,0.03)]"
                                 >
                                     <span className="text-lg text-brand">✦</span>
                                     <h3 className="font-heading text-lg font-bold text-foreground">{tester.name}</h3>
