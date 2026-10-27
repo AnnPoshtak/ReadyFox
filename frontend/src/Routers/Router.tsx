@@ -38,6 +38,7 @@ import { StatsOverview } from "@/pages/dashboard/StatsOverview/StatsOverview";
 import { TermsOfService } from "@/pages/docs/TermOfServices";
 import { PrivacyPolicy } from "@/pages/docs/PrivacyPolicy";
 import WillBeSoon from "@/pages/WillBeSoon/WillBeSoon";
+import CreditsPage from "@/pages/Credits/Credits";
 
 export const Router = () => {
     return (
@@ -80,6 +81,7 @@ export const Router = () => {
                 <Route path="/terms" element={<TermsOfService />} />
                 <Route path="/privacy" element={<PrivacyPolicy />} />
                 <Route path="/will-be-soon" element={<WillBeSoon />} />
+                <Route path="/credits" element={<CreditsPage />} />
             </Routes>
         </BrowserRouter>
     );
