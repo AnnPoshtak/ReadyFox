@@ -1,24 +1,41 @@
 <!doctype html>
-<html lang="en">
+<html lang="uk">
 
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
-  <script>
-    (function () {
-      const theme = localStorage.getItem('theme');
-      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-    })();
-  </script>
+  
+  <!-- Viewport & Theme Color -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ReadyFox</title>
+  <meta name="theme-color" content="#ff6b00">
+
+  <!-- Primary SEO Meta Tags -->
+  <title>ReadyFox — Безкоштовна навчальна платформа | Тести, уроки та прогрес</title>
+  <meta name="title" content="ReadyFox — Безкоштовна навчальна платформа | Тести, уроки та прогрес" />
+  <meta name="description" content="Інтерактивна освітня платформа ReadyFox для вчителів, викладачів та студентів. Створюйте тести, проводьте уроки та відстежуйте прогрес безкоштовно! 🦊🇺🇦" />
+  <meta name="keywords" content="ReadyFox, освітня платформа, створити тест онлайн, інтерактивні уроки, навчання онлайн, платформа для вчителів, НУШ, тести для студентів" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="ReadyFox" />
+
+  <!-- Open Graph / Facebook / Telegram / Viber -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ready-fox.vercel.app/" />
+  <meta property="og:title" content="ReadyFox — Сучасна та безкоштовна навчальна платформа 🦊🇺🇦" />
+  <meta property="og:description" content="Створюйте тести, проводьте цікаві інтерактивні уроки та стежте за прогресом студентів легко та безкоштовно." />
+
+  <!-- Twitter Card -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ready-fox.vercel.app/" />
+  <meta property="twitter:title" content="ReadyFox — Безкоштовна навчальна платформа" />
+  <meta property="twitter:description" content="Інтерактивні тести, конструювання уроків та аналітика успішності для українських освітян і студентів." />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://ready-fox.vercel.app/" />
 </head>
 
 <body>
