@@ -81,7 +81,7 @@ export const Router = () => {
                 <Route path="/terms" element={<TermsOfService />} />
                 <Route path="/privacy" element={<PrivacyPolicy />} />
                 <Route path="/will-be-soon" element={<WillBeSoon />} />
-                <Route path="/credits" element={<CreditsPage />} />
+                {/* <Route path="/credits" element={<CreditsPage />} /> */}
             </Routes>
         </BrowserRouter>
     );

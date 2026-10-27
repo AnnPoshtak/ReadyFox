@@ -3,11 +3,9 @@ import stickerAnimation from "/stickers/016.json?url";
 
 const testers = [
     { name: "@berizka" },
-    { name: "@legenda" },
-    { name: "@sora" },
-    { name: "@vex" },
-    { name: "@mira" },
-    { name: "@danylo" },
+    { name: "Блазень"},
+    { name: "@swedka.121"},
+    
 ];
 
 export default function CreditsPage() {
