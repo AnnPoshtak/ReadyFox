@@ -13,12 +13,14 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { QuizzesModule } from './quizzes/quizzes.module';
 import { LessonsModule } from './lessons/lessons.module';
+import { RedisModule } from './redis/redis.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    RedisModule,
     ThrottlerModule.forRoot([
       {
         ttl: 60000, // 60 секунд
