@@ -1,4 +1,6 @@
-import { Controller, Get, Post, UseGuards, Request, Response, Body } from "@nestjs/common";
+import { Controller, Get, Post, UseGuards, Request, Response, Body, Inject } from "@nestjs/common";
+import type { ConfigType } from "@nestjs/config";
+import { appConfig } from "@/config/app.config";
 import { AuthService } from "./auth.service";
 import { PassportLocalGuard } from "./guards/passport-local.guard";
 import { PassportJwtAuthGuard } from "./guards/passport-jwt.guard";
@@ -10,7 +12,11 @@ import { LoginAuthDto } from "./dto/login-auth.dto";
 
 @Controller('auth')
 export class PassportAuthController {
-    constructor(private authService: AuthService) { }
+    constructor(
+        private readonly authService: AuthService,
+        @Inject(appConfig.KEY)
+        private readonly appConf: ConfigType<typeof appConfig>, 
+    ) { }
 
     @Public()
     @Post('register')
@@ -54,7 +60,7 @@ export class PassportAuthController {
             refreshToken: authResult.refreshToken,
         });
 
-        const frontendUrl = `${process.env.FRONTEND_URL}/auth/callback?${params.toString()}`;
+        const frontendUrl = `${this.appConf.frontendUrl}/auth/callback?${params.toString()}`;
 
         return res.redirect(frontendUrl);
     }
@@ -73,5 +79,4 @@ export class PassportAuthController {
     async logout(@Request() req: any) {
         return this.authService.logout(req.user.sub || req.user.id);
     }
-
 }
