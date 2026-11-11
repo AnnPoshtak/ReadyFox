@@ -1,15 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, VerifyCallback } from 'passport-google-oauth20';
+import { Strategy } from 'passport-google-oauth20';
+import type { ConfigType } from '@nestjs/config';
 import { UsersService } from '../../users/users.service';
+import { authConfig } from '@/config/app.config';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
-  constructor(private usersService: UsersService) {
+  constructor(
+    private readonly usersService: UsersService,
+    @Inject(authConfig.KEY)
+    private readonly authConf: ConfigType<typeof authConfig>,
+  ) {
     super({
-      clientID: process.env.GOOGLE_CLIENT_ID || 'YOUR_GOOGLE_CLIENT_ID',
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'YOUR_GOOGLE_CLIENT_SECRET',
-      callbackURL: 'https://readyfox.onrender.com/auth/google/callback',
+      clientID: authConf.google.clientId!,
+      clientSecret: authConf.google.clientSecret!,
+      callbackURL: authConf.google.callbackUrl!,
       scope: ['email', 'profile'],
     });
   }
@@ -18,14 +24,12 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     accessToken: string,
     refreshToken: string,
     profile: any,
-    done: VerifyCallback,
   ): Promise<any> {
     const { name, emails } = profile;
     
     const email = emails[0].value;
     const firstName = name?.givenName || '';
     const lastName = name?.familyName || '';
-
     const nameAndSurname = `${firstName} ${lastName}`.trim();
 
     const user = await this.usersService.findOrCreateGoogleUser(
@@ -33,10 +37,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       nameAndSurname,
     );
 
-    done(null, {
-      id: user.id,
-      email: user.email,
-      name_and_surname: user.nameAndSurname,
-    });
+    return user;
   }
 }
