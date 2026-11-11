@@ -6,12 +6,15 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { PassportJwtAuthGuard } from './auth/guards/passport-jwt.guard';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { join } from 'path';
+import { appConfig } from './config/app.config';
+const appConf = appConfig();
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  app.enableCors();
+  app.enableCors({
+    origin: appConf.frontendUrl,
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -52,7 +55,7 @@ async function bootstrap() {
   const reflector = app.get(Reflector);
   app.useGlobalGuards(new PassportJwtAuthGuard(reflector));
 
-  const port = process.env.PORT ?? 3000;
+  const port = appConf.port || 3000;
   await app.listen(port);
 
   console.log(`Server running on http://localhost:${port}`);

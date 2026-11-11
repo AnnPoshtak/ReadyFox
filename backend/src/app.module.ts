@@ -13,11 +13,13 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { QuizzesModule } from './quizzes/quizzes.module';
 import { LessonsModule } from './lessons/lessons.module';
+import { appConfig, authConfig, databaseConfig } from './config/app.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      load: [appConfig, authConfig, databaseConfig],
     }),
     ThrottlerModule.forRoot([
       {
