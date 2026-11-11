@@ -7,12 +7,14 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy'; 
 import { GoogleStrategy } from './strategies/google.strategy';
 import { RefreshJwtStrategy } from './strategies/refresh-jwt.strategy';
+import { authConfig } from '@/config/app.config';
+const authConf = authConfig()
 
 @Module({
   imports: [
     UsersModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET || 'SECRET_KEY', 
+      secret: authConf.jwtSecret, 
       signOptions: { expiresIn: '1d' },
     }),
   ],
