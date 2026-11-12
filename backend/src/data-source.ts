@@ -3,9 +3,7 @@ import * as path from 'path';
 import { config } from 'dotenv';
 import { databaseConfig } from './config/app.config';
 
-config();
-
-const isDist = __dirname.includes('dist');
+config({ path: path.resolve(process.cwd(), '../.env') });
 const dbConf = databaseConfig();
 
 export const dataSourceOptions: DataSourceOptions = {
@@ -16,8 +14,8 @@ export const dataSourceOptions: DataSourceOptions = {
   password: dbConf.password,
   database: dbConf.database,
   ssl: dbConf.ssl,
-  entities: [isDist ? path.join(__dirname, '/**/*.entity.js') : 'src/**/*.entity.ts'],
-  migrations: [isDist ? path.join(__dirname, '/migrations/*.js') : 'src/migrations/*.ts'],
+  entities: [path.join(__dirname, '**', '*.entity.{ts,js}')],
+  migrations: [path.join(__dirname, 'migrations', '*.{ts,js}')],
   synchronize: false,
 };
 
